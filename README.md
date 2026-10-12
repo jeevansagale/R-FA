@@ -1,64 +1,126 @@
-# R-FA — FA-II R Programming Project: Supermarket Sales Analysis
+<p align="center">
+  <h1 align="center">Supermarket Sales Analysis with R</h1>
+  <p align="center"><b>FA-II Activity · Statistical Data Analysis using R (SDAUR) · Units I–IV</b></p>
+  <p align="center">
+    <img src="https://img.shields.io/badge/R-4.6.1-276DC3?logo=r&logoColor=white" alt="R 4.6.1"/>
+    <img src="https://img.shields.io/badge/dplyr-wrangling-1D6F42?logo=rstudio&logoColor=white" alt="dplyr"/>
+    <img src="https://img.shields.io/badge/ggplot2-visuals-E24A90" alt="ggplot2"/>
+    <img src="https://img.shields.io/badge/verified-20%2F20-brightgreen" alt="verified"/>
+  </p>
+</p>
 
-FA-II activity for **Statistical Data Analysis using R (SDAUR)** — a complete,
-reproducible R project (Units I–IV) on 1,000 supermarket transactions, plus a
-submission-ready report built from the instructor's sample-report format.
+<p align="center">
+  A complete, reproducible R project on <b>1,000 supermarket transactions</b> —
+  seven analytical problem statements, executed code, verified numbers,
+  publication-style charts, and a submission-ready report.
+</p>
 
-**Team**
+---
+
+## Team
 
 | Name | PRN |
-|---|---|
+|:---|:---|
 | Aditya Kuwar | 125B1B097 |
 | Jeevan Sagale | 125B1B080 |
 | Vedant Hire | 125B1B099 |
 | Tanay Daware | 125B1B098 |
 
-Submitted to: Dr. Sujata Bhamre · Dept. of AS&H, PCCOE · Academic Year 2026-27, Semester I
-
-## What's in this repo
-
-| Path | Contents |
-|---|---|
-| `R_Unit1_to_Unit4_Project/` | The project: R scripts, dataset, executed outputs, final report |
-| `R_Unit1_to_Unit4_Project/report/Supermarket_Sales_FA2_Report.docx` / `.pdf` | Final submission report (editable + print-ready) |
-| `R_Unit1_to_Unit4_Project/scripts/` | `unit1.R`–`unit4.R`, `problem_statements.R` (PS1–PS7), `data_analysis.R`, `report_figures.R`, `verify_results.R` |
-| `R_Unit1_to_Unit4_Project/outputs/` | Regenerated tables (`reports/`) and plots (`plots/`) |
-| `R_Unit1_to_Unit4_Project/data/supermarket_sales.csv` | Source dataset, preserved unchanged (1,000 rows × 17 columns) |
-| `course_materials/` | Course PDFs, practice datasets and scripts |
-| `SDAUR.zip` | Original course-material archive |
-| `Sample Report for FA2 Activity.docx` | Instructor's sample report format (reference, unchanged) |
-| `Supermarket_Sales_R_Project_Complete.zip` | Packaged snapshot of the finished project |
-| `Junk/` | Superseded files (old report draft, previous ZIP, failed text extractions) |
+*Submitted to Dr. Sujata Bhamre · Dept. of AS&H, PCCOE · AY 2026-27, Semester I*
 
 ## Dataset
 
-`supermarket_sales.csv`: 1,000 invoices, 17 columns, 3 branches (A/Yangon, B/Mandalay,
-C/Naypyitaw), 6 product lines, 1 Jan – 30 Mar 2019. No missing values, no duplicate
-rows. Note: `Total = 1.05 × Quantity × Unit price`, `Tax 5%` = `gross income`, and
-`gross margin percentage` is constant — regressions on these columns are honest
-model-fitting exercises, not causal discoveries (documented in code and report).
+`R_Unit1_to_Unit4_Project/data/supermarket_sales.csv` — 1,000 invoices × 17 columns,
+3 branches (A/Yangon, B/Mandalay, C/Naypyitaw), 6 product lines, Jan–Mar 2019.
+Zero missing values, zero duplicates, source file preserved untouched.
 
-## Key findings (all recomputed from the data by the scripts)
+> `Total = 1.05 × Quantity × Unit price` in every row (`Tax 5%` = `gross income`,
+> constant margin) — regressions on these columns are documented as honest
+> model-fitting exercises, not causal discoveries.
 
-- Total revenue **322,966.75**; mean invoice **322.97**, median **253.85**
-- Top product line: **Food and beverages (56,144.84)**; top branch: **C/Naypyitaw (110,568.71)**
-- Member (327.79) vs Normal (318.12): Welch t-test **not significant** (p = 0.534)
-- Quantity–Total correlation **r = 0.706** (p < 1e-150); Rating–Total **r = −0.036** (p = 0.250)
-- Branch / product-line / payment-method ANOVAs: all **not significant** at α = 0.05
+## Headline results
 
-## How to run
+| Finding | Value |
+|:---|:---|
+| Total revenue | **322,966.75** (mean 322.97 · median 253.85) |
+| Top product line | **Food and beverages — 56,144.84** |
+| Top branch | **C / Naypyitaw — 110,568.71** |
+| Member vs Normal means | 327.79 vs 318.12 — Welch t-test **not significant** (p = 0.534) |
+| Quantity ↔ Total | Pearson **r = 0.706** (p < 1e-150) |
+| Rating ↔ Total | Pearson **r = −0.036** (p = 0.250, not significant) |
+| Branch / product-line / payment ANOVAs | all **not significant** at α = 0.05 |
+| Best month / weekday | **January (116,291.87)** · **Saturday (56,120.81)** |
 
-1. Install R (4.x) and RStudio.
-2. Open `R_Unit1_to_Unit4_Project/R_Unit1_to_Unit4_Project.Rproj`.
-3. Run `main.R` (or `Rscript main.R` from the project root).
-4. Packages `dplyr`/`ggplot2` are auto-installed; `tidyr` is optional. Tables land in
-   `outputs/reports/`, plots in `outputs/plots/`, report figures in `report/figures/`.
-5. `scripts/verify_results.R` independently recomputes every headline number from
-   the raw CSV and stops on any mismatch — 20/20 matched in the submitted run.
+## Visual results
 
-Project docs: `PLAN.md` (audit + fix plan), `REPORT_PLAN.md`, `REPORT_VALIDATION.md`,
-`PROGRESS.md`, `UNIT_MAPPING.md`, `ASSESSMENT_CHECKLIST.md`, viva prep in `oral_exam/`.
+**PS1 — Revenue by product line.** Food and beverages leads; Health and beauty trails.
+ANOVA finds no significant mean difference across lines (F = 0.338, p = 0.890).
 
-## Still to fill before submission
+<p align="center"><img src="R_Unit1_to_Unit4_Project/report/figures/fig1_revenue_by_product_line.png" width="700"/></p>
 
-Branch, submission date, and signatures in the report.
+**PS2 — Revenue by branch.** Branch C tops both revenue and mean invoice, but branch
+means don't differ significantly (F = 0.885, p = 0.413).
+
+<p align="center"><img src="R_Unit1_to_Unit4_Project/report/figures/fig2_revenue_by_branch.png" width="700"/></p>
+
+**PS3 — Member vs Normal invoice totals.** Overlapping distributions; the 9.67 gap in
+means is not significant (t = 0.622, p = 0.534).
+
+<p align="center"><img src="R_Unit1_to_Unit4_Project/report/figures/fig3_customer_type_boxplot.png" width="700"/></p>
+
+**PS4 — Transactions by payment method.** Ewallet (345) ≈ Cash (344) ≫ Credit card (311);
+mean totals indistinguishable (F = 0.081, p = 0.922).
+
+<p align="center"><img src="R_Unit1_to_Unit4_Project/report/figures/fig4_payment_methods.png" width="700"/></p>
+
+**PS5 — Quantity vs invoice total.** Strong positive association (r = 0.706) — expected,
+since totals are computed from quantity and unit price. Not causal evidence.
+
+<p align="center"><img src="R_Unit1_to_Unit4_Project/report/figures/fig5_quantity_vs_total.png" width="700"/></p>
+
+**PS6 — Customer ratings.** Centered near 7 (mean 6.97, median 7.0, range 4–10) with
+essentially no link to invoice size (r = −0.036, p = 0.250).
+
+<p align="center"><img src="R_Unit1_to_Unit4_Project/report/figures/fig6_rating_distribution.png" width="700"/></p>
+
+**PS7 — Monthly revenue.** January peaks, February dips, March recovers — a 3-month
+sample description, not a seasonal trend.
+
+<p align="center"><img src="R_Unit1_to_Unit4_Project/report/figures/fig7_monthly_revenue.png" width="700"/></p>
+
+## Project layout
+
+```
+R_Unit1_to_Unit4_Project/
+├── main.R                      ← run this (entry point)
+├── scripts/                    ← unit1–unit4, problem_statements (PS1–PS7),
+│                                  data_analysis, report_figures, verify_results
+├── outputs/reports/            ← regenerated CSV/TXT tables + test results
+├── outputs/plots/              ← exploratory plots
+├── report/figures/             ← the 7 figures above + cover logo
+├── report/Supermarket_Sales_FA2_Report.{docx,pdf}  ← final report
+├── data/supermarket_sales.csv  ← untouched source data
+└── PLAN.md · REPORT_PLAN.md · REPORT_VALIDATION.md · PROGRESS.md · UNIT_MAPPING.md
+```
+
+## Run it
+
+```r
+# In RStudio: open R_Unit1_to_Unit4_Project.Rproj, then run main.R
+# Or from the terminal, in the project root:
+Rscript main.R
+```
+
+Packages `dplyr`/`ggplot2` install automatically; `tidyr` is optional.
+`scripts/verify_results.R` independently recomputes every headline number from the
+raw CSV and halts on any mismatch — **20/20 matched** in the submitted run
+(log: `outputs/reports/run_log.txt`).
+
+## Report & docs
+
+- Final report: `report/Supermarket_Sales_FA2_Report.docx` (editable) + `.pdf` (print-ready),
+  built to the instructor's sample format with real figures and traced numbers.
+- Full audit trail: `PLAN.md`, `REPORT_PLAN.md`, `REPORT_VALIDATION.md`, `PROGRESS.md`.
+- Viva prep: `oral_exam/viva_questions_and_functions.md`.
+
+<p align="center"><i>Branch, submission date and signatures to be filled at submission.</i></p>
