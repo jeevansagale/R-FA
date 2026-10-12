@@ -1,0 +1,3 @@
+             Df   Sum Sq Mean Sq F value Pr(>F)
+Branch        2   106988   53494   0.885  0.413
+Residuals   997 60292151   60474               

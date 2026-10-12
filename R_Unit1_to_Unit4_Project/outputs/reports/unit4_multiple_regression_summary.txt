@@ -1,0 +1,25 @@
+
+Call:
+lm(formula = Total ~ `Unit price` + Quantity + Branch + Payment, 
+    data = model_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-220.920  -47.311    1.923   46.467  216.146 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        -330.8386     9.2449 -35.786   <2e-16 ***
+`Unit price`          5.8163     0.0975  59.656   <2e-16 ***
+Quantity             58.7424     0.8829  66.537   <2e-16 ***
+BranchB               1.3547     6.2957   0.215    0.830    
+BranchC               7.4774     6.3233   1.183    0.237    
+PaymentCredit card   10.3891     6.3906   1.626    0.104    
+PaymentEwallet        0.5713     6.2229   0.092    0.927    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 81.56 on 993 degrees of freedom
+Multiple R-squared:  0.8906,	Adjusted R-squared:   0.89 
+F-statistic:  1348 on 6 and 993 DF,  p-value: < 2.2e-16
+

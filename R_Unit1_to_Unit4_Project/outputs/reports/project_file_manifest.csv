@@ -1,0 +1,124 @@
+path,bytes,md5_12
+outputs/reports/.gitkeep,0,d41d8cd98f00
+outputs/reports/accounting_relations_check.csv,227,02a70d07a0e0
+outputs/reports/integrated_branch_anova.txt,144,920c50396a20
+outputs/reports/integrated_data_quality_report.csv,87,f24a476079a9
+outputs/reports/integrated_product_performance.csv,677,0a512a40beaf
+outputs/reports/integrated_project_summary.txt,362,fede29e1749a
+outputs/reports/integrated_quantity_total_correlation.csv,76,c3f84162e79e
+outputs/reports/project_file_manifest.csv,7892,f162bd84a2d1
+outputs/reports/ps1_product_line_anova.txt,153,541d0d5958ca
+outputs/reports/ps1_product_line_revenue.csv,767,1b362cd8935b
+outputs/reports/ps2_branch_anova.txt,144,920c50396a20
+outputs/reports/ps2_branch_comparison.csv,302,abc8e72389e0
+outputs/reports/ps3_customer_type.csv,248,5a1228180e66
+outputs/reports/ps3_customer_type_t_test.txt,363,87a0b5d5a4be
+outputs/reports/ps4_payment_anova.txt,144,09b3030c2afc
+outputs/reports/ps4_payment_method.csv,257,dc0885340834
+outputs/reports/ps5_invoice_total_model.txt,676,a903ac26b68a
+outputs/reports/ps5_quantity_total_correlation.txt,283,a8f44f7bae18
+outputs/reports/ps6_rating_summary.csv,123,ad06e1b53d39
+outputs/reports/ps6_rating_total_correlation.txt,286,c74c32b63485
+outputs/reports/ps7_monthly_revenue.csv,164,8f21a1abb7ef
+outputs/reports/ps7_weekday_revenue.csv,334,47255c205235
+outputs/reports/ps_inferential_tests.csv,2526,c29488406506
+outputs/reports/run_log.txt,39590,fa7dfb454f9e
+outputs/reports/student_data_example.csv,69,e8e20de751da
+outputs/reports/supermarket_sales_cleaned.csv,147886,df1a07fcecae
+outputs/reports/unit1_arithmetic_examples.csv,143,20c81a83995f
+outputs/reports/unit1_dataset_numeric_summary.csv,625,4ca72f331de2
+outputs/reports/unit2_branch_summary.csv,267,2c91dfdde1d4
+outputs/reports/unit2_descriptive_statistics.csv,679,bf00f0144047
+outputs/reports/unit2_duplicate_audit.csv,60,f00d4d283fb3
+outputs/reports/unit2_missing_value_audit.csv,304,c1ef90b6b849
+outputs/reports/unit2_product_line_summary.csv,855,2ca2f7ae3049
+outputs/reports/unit2_skewness_kurtosis.csv,377,b5c68611fdfe
+outputs/reports/unit3_predictions.csv,148,14b231f15a55
+outputs/reports/unit3_simple_regression_metrics.csv,168,aa6c70e0ce3a
+outputs/reports/unit3_simple_regression_summary.txt,640,9ca4fd3fda8a
+outputs/reports/unit4_coefficient_confidence_intervals.csv,361,779f124f250e
+outputs/reports/unit4_example_prediction.csv,134,bafa46680436
+outputs/reports/unit4_interaction_model_summary.txt,807,a12d3fa426b4
+outputs/reports/unit4_model_form_comparison.csv,293,d82c223e6bd6
+outputs/reports/unit4_model_metrics.csv,210,af2cdcba824f
+outputs/reports/unit4_multiple_regression_summary.txt,962,ac812a2aebad
+outputs/reports/unit4_numeric_correlation_matrix.csv,751,6d9353b93ef5
+outputs/reports/unit4_regression_coefficients.csv,609,393ff007f75c
+outputs/reports/verification_results.csv,969,81f439c59f55
+outputs/plots/.gitkeep,0,d41d8cd98f00
+outputs/plots/integrated_quantity_vs_total.png,343260,81ccd9dafc82
+outputs/plots/integrated_revenue_by_product_line.png,84304,7430b14ee7fd
+outputs/plots/integrated_total_by_branch.png,57586,9611718d4cf6
+outputs/plots/ps3_customer_type_boxplot_grid.png,41036,8c586cda011e
+outputs/plots/ps3_customer_type_boxplot_member.png,43946,828ba2c25a97
+outputs/plots/ps3_customer_type_boxplot_normal.png,44265,a31e3dd2d352
+outputs/plots/unit2_branch_revenue.png,51265,cd0b5160d92d
+outputs/plots/unit2_product_line_bar.png,83405,beef484b481b
+outputs/plots/unit2_total_boxplot.png,59483,3981f6583c2e
+outputs/plots/unit2_total_by_product_line.png,132256,769d75b3aebe
+outputs/plots/unit2_total_density.png,118443,93b0c1b2f97c
+outputs/plots/unit2_total_histogram.png,58916,d968e5c529ec
+outputs/plots/unit2_unit_price_vs_total_scatter.png,460824,d9d3bf976bc7
+outputs/plots/unit3_residuals_vs_fitted.png,161235,f3e3fe25eb4f
+outputs/plots/unit3_simple_regression.png,152139,d236cfc29eba
+outputs/plots/unit4_diagnostic_panels.png,252408,37700d3f98bb
+outputs/plots/unit4_observed_vs_predicted.png,417642,ff8149f2238a
+report/figures/fig1_revenue_by_product_line.png,69179,da5d1cd01d13
+report/figures/fig2_revenue_by_branch.png,58549,b8f570bc0b89
+report/figures/fig3_customer_type_boxplot.png,43403,484d08d54f6b
+report/figures/fig4_payment_methods.png,44807,9408900a4505
+report/figures/fig5_quantity_vs_total.png,157935,1e1becedd132
+report/figures/fig6_rating_distribution.png,46530,4e1ed9a46f34
+report/figures/fig7_monthly_revenue.png,59943,ad3485988ad7
+report/figures/pccoe_logo.png,238858,8f67aa53f101
+report/.~permarket_Sales_FA2_Report.docx,162,4fc9e4cb201b
+report/Supermarket_Sales_FA2_Report.docx,675417,82c3308eabba
+report/Supermarket_Sales_FA2_Report.pdf,927606,02d607efa147
+report/build_pdf.py,8539,a2e4b0273c0c
+report/build_report.py,41153,013509e74122
+scripts/course_concept_demos.R,2721,3bce031f06f1
+scripts/data_analysis.R,6162,d2b6b6f29511
+scripts/problem_statements.R,15689,ac2f28bb7614
+scripts/report_figures.R,5943,f592139aef0d
+scripts/unit1.R,3682,5f4b9ad83677
+scripts/unit2.R,10619,39b117e871b4
+scripts/unit3.R,3939,2c9ea3022b84
+scripts/unit4.R,7474,24ede39c26ec
+scripts/verify_results.R,4879,35face2e977e
+functions/helper_functions.R,822,f28dd6b6a730
+data/supermarket_sales.csv,131528,3b4cf0aacbb9
+reference_materials/sample project_FA2.R,2173,ad9e9863b7ee
+reference_materials/source_inventory.csv,2592,85c934a97c5a
+reference_materials/original_SDAUR/Missing_value.pdf,191969,47ac69d15efd
+reference_materials/original_SDAUR/Multiple Regression (1).R,3782,ed3f05001e2e
+reference_materials/original_SDAUR/SDAUR Unit II R scipt.pdf,1514117,faf09dd6b18e
+reference_materials/original_SDAUR/Script Linear regression.pdf,38096,2914b406fde2
+reference_materials/original_SDAUR/Script_Bar plot.pdf,20261,8cfaddbb55c0
+reference_materials/original_SDAUR/Script_Box_Histo_pie_vio_r plot.pdf,23718,ac105b35a62f
+reference_materials/original_SDAUR/Script_Desciptive ststistics.pdf,23160,4e04deb356c7
+reference_materials/original_SDAUR/Script_Scatter plot.pdf,19139,901d838520cc
+reference_materials/original_SDAUR/data_join.pdf,180069,8a58d5962225
+reference_materials/original_SDAUR/datatype_change (1).pdf,85484,7b50553b8fbf
+reference_materials/original_SDAUR/dplyr.pdf,18326,cf21e8337004
+reference_materials/original_SDAUR/final Unit I command script.pdf,32843,b00271251879
+reference_materials/original_SDAUR/wrangling using tidyr (1).pdf,288835,feab5e5d379f
+reference_materials/extracted_text/Multiple Regression (1).R.txt,3782,ed3f05001e2e
+reference_materials/extracted_text/Script Linear regression.txt,1761,6555b6bf9bef
+reference_materials/extracted_text/Script_Bar plot.txt,2647,672786a63221
+reference_materials/extracted_text/Script_Box_Histo_pie_vio_r plot.txt,5452,10dca45bdb40
+reference_materials/extracted_text/Script_Desciptive ststistics.txt,2833,44e4e2893328
+reference_materials/extracted_text/Script_Scatter plot.txt,2802,2fe6f34af833
+reference_materials/extracted_text/dplyr.txt,1270,c47dc1068bf6
+reference_materials/extracted_text/final Unit I command script.txt,7399,0defeba76533
+oral_exam/viva_questions_and_functions.md,5308,d47918458aee
+main.R,5384,a99bd881db30
+requirements.R,2014,ce386de53f1e
+README.md,4060,ef1aff02bf1a
+PLAN.md,15196,ce61a691c174
+PROGRESS.md,3097,1b11c96261ec
+UNIT_MAPPING.md,2612,76c4fd0b8ac4
+ASSESSMENT_CHECKLIST.md,2513,e7c6154a579c
+REPORT_PLAN.md,4140,2fdcbd0db960
+REPORT_VALIDATION.md,4069,b13569f05c36
+R_Unit1_to_Unit4_Project.Rproj,195,f397d016657c
+.gitignore,28,9e26d710f6e4

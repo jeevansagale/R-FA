@@ -1,0 +1,100 @@
+View(diamonds)
+# Import Placement_Data_Full_Class
+str(Placement_Data_Full_Class)
+summary(Placement_Data_Full_Class)
+is.na(Placement_Data_Full_Class)
+sum(is.na(Placement_Data_Full_Class))
+which((is.na(Placement_Data_Full_Class)))
+
+#Central Tendencies
+Mean=mean(Placement_Data_Full_Class$salary, na.rm = TRUE)
+Median=median(Placement_Data_Full_Class$salary,na.rm = TRUE)
+
+install.packages("modeest")
+library(modeest)
+Mode= mfv(Placement_Data_Full_Class$salary, na_rm = TRUE)
+print(Mode)
+
+SD=sd(Placement_Data_Full_Class$salary, na.rm = TRUE)
+Variance= var(Placement_Data_Full_Class$salary, na.rm = TRUE)
+
+Quartile= quantile(Placement_Data_Full_Class$salary, na.rm = TRUE)
+print(Quartile)
+Range= IQR(Placement_Data_Full_Class$salary,na.rm = TRUE)
+print(Range)
+#Coefficient of variation
+sd(Placement_Data_Full_Class$salary,
+na.rm=TRUE)/mean(Placement_Data_Full_Class$salary, na.rm=TRUE)*100
+
+library(pastecs)
+stat.desc(Placement_Data_Full_Class)
+#It displays all values after omiting NA
+a=c(2,4,6,10)
+b=c(12,25,30,50)
+sd1=sd(a)
+sd2=sd(b)
+cv1=sd1/mean(a)*100
+cv2=sd2/mean(b)*100
+# cv1=62.102, cv2=53.9387,
+View(diamonds)
+summary(diamonds)
+stat.desc(diamonds)
+trial=data.frame(A=c(10,14,18,20,25),B=c(9,15,18,10,30))
+stat.desc(trial)#CV is more for B so A is more stable.
+
+#Visualize dispersion of price according to cut of the diamonds
+
+ggplot(diamonds, aes(price))+geom_histogram(fill="green")+
+  geom_vline(aes(xintercept=mean(price), color="red"))+
+  facet_wrap(~cut)
+
+ggplot(diamonds, aes(price))+geom_boxplot(fill="green")+
+  geom_vline(aes(xintercept=mean(price), color="red"))+
+  facet_wrap(~cut)
+
+ggplot(diamonds, aes(price))+geom_histogram(fill="blue")+
+  geom_vline(aes(xintercept=median(price), color="red"))+
+  facet_wrap(~cut)
+View(diamonds)
+
+A=diamonds %>% group_by(cut) %>% summarise(Mean=mean(price),
+Meadian=median(price), SD=sd(price), Variance=var(price))
+
+#to compute the standard deviation (or variance) of multiple
+variables at the same time
+#lapply: Apply a function over list or a vector
+D1=select(diamonds, -cut, -color,-clarity)
+lapply(D1[, 1:4], sd)
+lapply(D1, sd)#for all columns
+lapply(D1[, 1:4], mean)
+lapply(D1[, 1:4], var)
+lapply(D1[, 1:4], median)
+
+#Skewness
+install.packages("moments")
+library(moments)
+skewness(D1)
+skewness(D1$price) #positively skewed
+ggplot(D1, aes(price))+geom_density() #right skewed
+
+skewness(D1$carat) #positively skewed
+ggplot(D1, aes(carat))+geom_density() #right skewed
+
+skewness(iris$Petal.Width) #negatively skewed
+ggplot(iris, aes(Petal.Width))+geom_density()
+#Kurtosis
+kurtosis(D1)
+kurtosis(D1$price) #Leptokurtic
+kurtosis(D1$carat) #Leptokurtic
+kurtosis(iris$Petal.Width) #Platykurtic
+
+#Correlation
+Data1=select(iris,-Species)
+cor(Data1)
+D2=cor(Data1)
+install.packages("corrplot")
+library(corrplot)
+corrplot(D2)
+corrplot(D2, method="number")
+corrplot(D2, method="pie")
+

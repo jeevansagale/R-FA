@@ -1,0 +1,12 @@
+SUPERMARKET SALES - INTEGRATED PROJECT SUMMARY
+Rows: 1000
+Columns: 17
+Missing cells: 0
+Duplicate rows: 0
+Mean invoice total: 322.97
+Median invoice total: 253.85
+Mean gross income: 15.38
+Mean customer rating: 6.97
+
+Interpret all tests using their p-values and assumptions.
+The data represents the supplied dataset and may not represent all supermarket customers.

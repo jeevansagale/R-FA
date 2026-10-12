@@ -1,0 +1,84 @@
+#data used diamonds
+View(diamonds)
+
+install.packages("ggplot2")
+library(ggplot2)
+#Bar plot
+
+#Map aesthetic
+ggplot(diamonds, aes(cut))
+
+# no need to write aesthetic x= or y= , by default first variable
+will be condered for x and second for y
+ggplot(diamonds, aes(cut))
+
+#Add geometric as bar by geom_bar
+# for a univariate categorical variable
+ggplot(diamonds, aes(x=cut))+geom_bar()
+
+print(P)
+# Use actual y-values from the data instead of counting rows
+#flip the coordinate
+ggplot(diamonds, aes(x=cut))+geom_bar()+coord_flip()
+
+#fill colors to bar
+ggplot(diamonds, aes(x=cut))+geom_bar(fill="red")
+ggplot(diamonds, aes(x=cut))+geom_bar(fill="red", alpha=0.8)
+# border color
+ggplot(diamonds, aes(x=cut))+geom_bar(fill="red", color="blue")
+
+# Width of bar
+ggplot(diamonds, aes(x=cut))+geom_bar(fill="red", color="blue",
+width =0.3)#width in range (0, 1)
+
+# transparency of th fill of bar
+ggplot(diamonds, aes(x=cut))+geom_bar(fill="red", color="blue",
+alpha=0.1)#alpha for transparency (0,1)
+#Add labels
+ggplot(diamonds, aes(x=cut))+geom_bar(fill="red",
+color="blue")+labs(x="Diamonds Cut", y="Count", title="Frequencies
+of cut")
+
+# fill color to each bar as per cut
+ggplot(diamonds, aes(x=cut))+geom_bar(fill="green")
+ggplot(diamonds, aes(x=cut, fill=cut))+geom_bar()
+
+#labels values to each bar by calculating count of each variable
+group_by(diamonds, cut) %>% summarise(Freq=n())%>%
+  ggplot(aes(x=cut, y=Freq))+
+  geom_bar(stat="identity")+geom_text(aes(label=Freq))
+
+# stat= identity is needed in above case pleas note this
+group_by(diamonds, cut) %>% summarise(Freq=n())%>% ggplot(aes(x=cut,
+y=Freq, fill=cut))+
+  geom_bar(stat="identity")+
+  geom_text(aes(label=Freq),vjust=-1, size=2, color="blue")#size to
+change font and vjust for adjustment of position
+
+#explore different size and positions
+group_by(diamonds, cut) %>% summarise(Freq=n())%>% ggplot(aes(x=cut,
+y=Freq, fill=cut))+
+  geom_bar(stat="identity",width=0.9)+
+  geom_text(aes(label=Freq),vjust=0.01, size=2.6, color="blue")
+
+#plot quality of diamond with color(Biavriate two categorical)
+View(diamonds)
+ggplot(diamonds, aes(x=cut, fill=color))+geom_bar() #stack bar
+first var is cut, second is color
+ggplot(diamonds, aes(x=cut, fill=clarity))+geom_bar()
+ggplot(diamonds, aes(x=cut, fill=color))+geom_bar(position =
+"dodge") #grouped bar
+
+#Use of facet_wrap
+#We can get different plot in one frame as per a categorical
+variable
+ggplot(diamonds, aes(cut, fill=cut))+geom_bar()+
+  facet_wrap(~color)
+ggplot(diamonds, aes(color, fill=color))+geom_bar()+
+  facet_wrap(~cut)
+
+
+
+ggplot(diamonds, aes(x=cut,fill=clarity))+
+  geom_bar()+facet_wrap(~color)#for 3 categorical variables
+

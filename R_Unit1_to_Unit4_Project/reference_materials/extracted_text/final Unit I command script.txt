@@ -1,0 +1,347 @@
+2+3
+2*4
+2**3
+2^3
+sin(30)
+sin(pi/6)
+x=6 #observe environment window
+y=c(1,2,3)
+sum(y)
+max(y)
+mean(y)
+
+
+#import PDF file with code and O/P
+#file>compile report>pdf>compile
+
+x*y
+z=c(2,3)
+p=y*z
+log (10)
+log(10,10)
+log(10,2)
+
+#Vector presentation
+y=(1,2,3)# error
+y=1,2,3,4#error
+y=[1,2,3]#error
+y=c(1,2,3)
+View(y)
+print(y)
+
+#Multiplication
+2*3
+#Addition
+2+3
+#Substraction
+2-3
+#Division 3/2
+#Mixed operations2*4-5+3/2
+output:4.5
+
+#power 2^3 30r 2**3
+output 8
+
+#Vector power
+c(2,3,5,7)^2
+output 4,9,25,49
+
+#vector multiplication
+c(2,3,5,7)^c(2,3)
+output:4,27,25,343
+
+#Error c(2,3,5,7)^c(2,3,4)
+#scalar multiplication with vector
+c(2,3,4,5,6,7)*3
+output:6,9,12,15,18,21
+
+# Vector Vector multiplication
+c(2,3,5,7)*c(-2,-3,-5,8)
+#output:-4,-9,-25,56
+
+c(2,3,5,7)*c(8,9)
+#output:16,27,40,63
+
+c(2,3,5,7)*c(8,9,10)
+#Output:Warning message
+
+#Scalar addition
+c(2,3,5,7)+6
+#output:8,9,11,13
+
+#two vectors addition
+c(2,3,5,7)+c(-2,-3,-5,8)
+#output:0 0 0 15
+c(2,3,5,7)+c(8,8,10)
+#Output: answer with Warning message
+c(2,3,5,7)%/% c(2,3)#( Fraction part is discarded)
+#output:1 1 2 2
+
+c(2,3,5,7)%%2#( Remainder is considered)
+#output: 0 1 1 1
+
+c(2,3,5,7)%%c(2,3)
+#output:0 0 1 1
+
+#Maximum
+max(1.4,2.6,7.8)
+#output:7.8
+
+#Minimum
+min(1.4,2.6,7.8)
+#output:1.4
+
+#Absolute value
+abs(-4)
+#output:4
+abs(c(-2,-3,-4,-5))
+#output:2,3,4,5
+
+#square root
+sqrt(9)
+#output:3
+sqrt(c(2,4,9))
+#output:1.141,2,3
+
+#sum
+sum(c(4,5,9))
+#output:18
+
+#product
+prod(c(4,5,9))
+output:180
+
+# round
+round(4.29)
+#output:4
+round(4.52)
+#output:5
+
+x1=c(1,2,3)        #Observe in environment window num=number
+x=1:8          #int= integer
+a=c("XYZ",'PQR')           #chr=character
+b=c(TRUE,FALSE,TRUE)         #logi=logic
+rm(b)     #removes(clear object from work space) b variable OR in environment convert List to grid >tick for
+item> use broom
+x2=x1^2
+print(x2)
+#output:1, 4, 9
+
+#Function
+a=function(x){x^2}
+a(3)
+#output:9
+
+a=function(x,y){x+y}
+a(2,3)
+#output:5
+
+#matrix
+A=matrix(nrow=4,ncol=2,data=c(1,2,3,4,5,6,7,8))#data=1:8
+B=matrix(nrow=4,ncol=2,data=c(1,2,3,4,5,6,7,8),byrow=T)
+print(A)
+
+#output:A=1 5
+#2 6
+#3 7
+#4 8
+
+#Location
+A(2,1)
+#Output:error
+A[2,1]
+#output:2
+A[2,]
+
+mode(A)
+#output:numeric
+
+attributes(A)
+#output: 4,2
+
+B=matrix(nrow=2,ncol=2,data=c("a","b","c","d"))
+mode(B)
+#Output: character
+
+# Scalar multiple matrix
+C=matrix(nrow=2,ncol=4,data=2)
+View(C)
+
+#Unit matrix
+D=diag(1,nrow=2,ncol=2)
+print(D)
+
+E=matrix(nrow=4,ncol=2,data=1:8,byrow=T)
+E[2,]
+print(E)
+
+P=matrix(nrow = 2,ncol=2,1:4)
+Q=matrix(nrow = 2,ncol=2,c(1,0,2,1))
+P+Q
+P*Q #entrywise multiplication
+P%*%Q #Actual matrix multiplication
+t(P)#Transpose matrix
+det(P)#determinant
+solve(P)#inverse matrix
+dim(P)#dimension of matrix
+#data: i) data framing ii) inbuilt data    iii)import data
+
+# Data framing
+#The function data. frame() creates data frames, tightly coupled collections of variables which share many of
+the properties of matrices and of lists, used as the fundamental data structure by most of R's modeling
+software
+Names=c("A","B","C")
+Subject=c("Maths","Eng","Sci")
+Mathmarks=c(2,4,6)
+Engmarks=c(5,7,8)
+Scimarks=c(8,9,10)
+Marks=data.frame(Names,Subject,Mathmarks,Engmarks,Scimarks)
+# another way
+Marks=data.frame(Names=c("A","B","C"),
+                 Subject=c("Maths","Eng","Sci"),
+                 Mathmarks=c(2,4,6),
+                 Engmarks=c(5,7,8),
+                 Scimarks=c(8,9,10))
+print(Marks)
+View(Marks)
+
+print(Marks[2,])
+#Output: 2nd row
+
+print(Marks[1,"Mathmarks"])
+#output:2
+
+#4. Binding the Data in R
+#i) rbind: create two data sets with same number of columns/variables
+stud_name=c("Rita","Anaya","Smita","Tushar")
+LAUC_Marks=c(15,15,20,17)
+Roll_No=c(1:4)
+MC_Marks=c(15,10,8,20)
+Grade=c("A","B","C","D")
+D1=data.frame(Stud_name,Roll_No,LAUC_Marks,MC_Marks,Grade)
+View(D1)
+
+Stud_name=c("Suraj","Pranay")
+LAUC_Marks=c(25,22)
+Roll_No=c(5,6)
+MC_Marks=c(17,10)
+Grade=c("A","B")
+D2=data.frame(Stud_name,Roll_No,LAUC_Marks,MC_Marks,Grade)
+View(D2)
+#Add number of rows with rbind
+D_r=rbind(D1, D2)
+View(D_r)
+
+#ii) cbind: Add number of columns with cbind
+#create a new data frame with same number of rows/observations
+
+D3=data.frame(PRN=c(111,112,113,114,115,116),
+              Dept=c("IT","Comp","E&Tc","IT","E&Tc","Comp"))
+#Add number of columns with cbind
+D_c = cbind(D_r, D3)
+View(D_c)
+#OR add new column
+D_n=D_r$PRN=c(111,112,113,114,115,116)
+#Deletion of first observations
+l1=D_c[-1,]
+#Deletion of second observations
+l2=D_c[-2,]
+#Deletion of first variable
+l3=D_c[,-1]
+#Deletion of second variable
+l4=D_c[,-2]
+#Deletion of first row and second column
+L5 = D_c[-1,-2]
+
+#ii)inbuilt data
+data()              # opens list of Data sets in package ‘datasets’
+data(mtcars)
+View(diamonds)
+View(CO2)             #opens in new Tab , also check in help window
+View(mtcars)            # opens spreadsheet-style viewer
+dim(mtcars)               # dimension: rows x columns
+nrow(mtcars)               # number of rows
+ncol(mtcars)                # number of columns
+colnames(mtcars)              # column names or names(mtcars)
+mtcars$am                      # fetch "am" column data
+mtcars[,9]
+mtcars[,"am"]
+mtcars[2,]
+mtcars["Fiat X1-9",]       # gives information of Fiat X1-9 row
+head(mtcars)           # default first 6 rows
+head(mtcars,10)         # first 10 rows
+head(mtcars,2)
+mtcars[2,]
+tail(mtcars)             # last 6 rows
+str(mtcars)               # structure: column names + data types
+str(iris)
+summary(mtcars)                 # statistical summary of each column
+summary(iris)
+View(iris)
+summary(iris)
+#check for iris data set
+colnames(iris)
+mean(iris$Sepal.Length)
+mode(iris$Species)
+typeof(iris$Species)
+mode(iris$Sepal.Length)
+typeof(iris$Sepal.Length)
+#typeof() is highly precise. It distinguishes whether a number is
+#stored as a double-precision floating-point decimal ("double") or
+#a whole number ("integer").mode() is broader.
+#It simplifies both integers and doubles into a single category: "numeric"
+max(iris$Sepal.Length)
+min(iris$Species)#error
+colSums(mtcars)
+attributes(iris$Species)
+#Output
+#$levels
+#[1] "setosa" "versicolor" "virginica"
+#$class
+#[1] "factor"
+View(iris)
+
+# How to read(import)/write(export) csv file
+# Create a data frame
+student <- data.frame(
+  Roll_No = c(101, 102, 103),
+ Name = c("Amit", "Priya", "Rahul"),
+ Marks = c(85, 90, 78)
+)
+# Export to CSV
+write_csv(student, "student_data.csv")
+#student is existing csv file
+#create file in folder with new name student_data
+a=write_csv(student, "student_data.csv")
+#open a data file in environment window with name a
+View(a)
+print(a)
+
+#import csv file
+b=read_csv("student_data.csv")
+#imports file in environment window
+#student_data.csv is file in folder, .csv extension is must
+
+#write a command to import/export csv file with name "Marks"
+library(readr)
+EV <- read_csv("electric_vehicles.csv")
+#import file,electric_vehicles is actual name with new name EV
+write_csv(EV,"EV1.csv")
+#export EV(original) file with downloaded name EV1
+
+#additional for trial on different data sets
+c=read.csv("electric_vehicles.csv")#import
+write.csv(c,"vehicle data.csv")#export
+
+#Export data from R
+#Write data frame into comma separated file
+electric_vehicles <- read_csv("electric_vehicles_spec_2025.csv (1) (1).csv")
+write.csv(student,"student.csv")
+write.csv(Final_Data,"Final_Data.csv")
+#Write data frame into space separated text file
+write.table(Final_Data,file='Final_Data.txt')
+
+install.packages("openxlsx")
+library(openxlsx)
+write.xlsx(My.Data,"B")
+

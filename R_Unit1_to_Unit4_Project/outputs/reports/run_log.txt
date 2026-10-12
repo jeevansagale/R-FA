@@ -1,0 +1,836 @@
+
+============================================================
+R PROGRAMMING PROJECT: UNIT 1 TO UNIT 4
+Dataset: Supermarket Sales
+Execution order: Unit 1 -> Unit 2 -> Unit 3 -> Unit 4 -> Integrated Analysis
+============================================================
+
+Project root: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project 
+Checking R packages
+Required packages are available:
+  available: dplyr
+  available: ggplot2
+  available: tidyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Loading dataset: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/data/supermarket_sales.csv 
+Dataset loaded successfully: 1000 rows and 17 columns.
+
+------------------------------------------------------------
+Running: scripts/unit1.R 
+------------------------------------------------------------
+
+[UNIT 1] R basics and data inspection
+          Expression   Result
+1              2 + 3 5.000000
+2              2 * 4 8.000000
+3                2^3 8.000000
+4            30 %% 7 2.000000
+5           30 %/% 7 4.000000
+6        sin(pi / 6) 0.500000
+7            log(10) 2.302585
+8 log(10, base = 10) 1.000000
+$original_vector
+[1] 2 3 5 7
+
+$squared
+[1]  4  9 25 49
+
+$scalar_multiplication
+[1]  6  9 15 21
+
+$scalar_addition
+[1]  8  9 11 13
+
+$integer_division
+[1] 1 1 2 3
+
+$remainder
+[1] 0 1 1 1
+
+$sum
+[1] 17
+
+$product
+[1] 210
+
+$minimum
+[1] 2
+
+$maximum
+[1] 7
+
+$absolute_values
+[1] 2 3 4
+
+$square_roots
+[1] 1.414214 2.000000 3.000000
+
+
+Built-in mtcars structure:
+              mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4      21   6  160 110  3.9 2.620 16.46  0  1    4    4
+Mazda RX4 Wag  21   6  160 110  3.9 2.875 17.02  0  1    4    4
+                mpg cyl  disp  hp drat    wt qsec vs am gear carb
+Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2
+Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2
+Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.5  0  1    5    4
+Ferrari Dino   19.7   6 145.0 175 3.62 2.770 15.5  0  1    5    6
+Maserati Bora  15.0   8 301.0 335 3.54 3.570 14.6  0  1    5    8
+Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.6  1  1    4    2
+'data.frame':	32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
+
+Built-in iris structure:
+'data.frame':	150 obs. of  5 variables:
+ $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+ $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+ $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+ $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+ $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
+                
+                
+                
+[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"     
+typeof(iris$Sepal.Length): double 
+class(iris$Species): factor 
+typeof(iris$Species): integer 
+$levels
+[1] "setosa"     "versicolor" "virginica" 
+
+$class
+[1] "factor"
+
+  Roll_No  Name Marks
+1     101  Amit    85
+2     102 Priya    90
+3     103 Rahul    78
+
+Provided dataset: supermarket_sales.csv
+Dimensions:
+[1] 1000   17
+
+First six rows:
+   Invoice ID Branch      City Customer type Gender           Product line
+1 750-67-8428      A    Yangon        Member Female      Health and beauty
+2 226-31-3081      C Naypyitaw        Normal Female Electronic accessories
+3 631-41-3108      A    Yangon        Normal   Male     Home and lifestyle
+4 123-19-1176      A    Yangon        Member   Male      Health and beauty
+5 373-73-7910      A    Yangon        Normal   Male      Sports and travel
+6 699-14-3026      C Naypyitaw        Normal   Male Electronic accessories
+  Unit price Quantity  Tax 5%    Total      Date  Time     Payment   cogs
+1      74.69        7 26.1415 548.9715  1/5/2019 13:08     Ewallet 522.83
+2      15.28        5  3.8200  80.2200  3/8/2019 10:29        Cash  76.40
+3      46.33        7 16.2155 340.5255  3/3/2019 13:23 Credit card 324.31
+4      58.22        8 23.2880 489.0480 1/27/2019 20:33     Ewallet 465.76
+5      86.31        7 30.2085 634.3785  2/8/2019 10:37     Ewallet 604.17
+6      85.39        7 29.8865 627.6165 3/25/2019 18:30     Ewallet 597.73
+  gross margin percentage gross income Rating
+1                4.761905      26.1415    9.1
+2                4.761905       3.8200    9.6
+3                4.761905      16.2155    7.4
+4                4.761905      23.2880    8.4
+5                4.761905      30.2085    5.3
+6                4.761905      29.8865    4.1
+
+Last six rows:
+      Invoice ID Branch      City Customer type Gender           Product line
+995  652-49-6720      C Naypyitaw        Member Female Electronic accessories
+996  233-67-5758      C Naypyitaw        Normal   Male      Health and beauty
+997  303-96-2227      B  Mandalay        Normal Female     Home and lifestyle
+998  727-02-1313      A    Yangon        Member   Male     Food and beverages
+999  347-56-2442      A    Yangon        Normal   Male     Home and lifestyle
+1000 849-09-3807      A    Yangon        Member Female    Fashion accessories
+     Unit price Quantity  Tax 5%     Total      Date  Time Payment   cogs
+995       60.95        1  3.0475   63.9975 2/18/2019 11:40 Ewallet  60.95
+996       40.35        1  2.0175   42.3675 1/29/2019 13:46 Ewallet  40.35
+997       97.38       10 48.6900 1022.4900  3/2/2019 17:16 Ewallet 973.80
+998       31.84        1  1.5920   33.4320  2/9/2019 13:22    Cash  31.84
+999       65.82        1  3.2910   69.1110 2/22/2019 15:33    Cash  65.82
+1000      88.34        7 30.9190  649.2990 2/18/2019 13:28    Cash 618.38
+     gross margin percentage gross income Rating
+995                 4.761905       3.0475    5.9
+996                 4.761905       2.0175    6.2
+997                 4.761905      48.6900    4.4
+998                 4.761905       1.5920    7.7
+999                 4.761905       3.2910    4.1
+1000                4.761905      30.9190    6.6
+
+Structure:
+'data.frame':	1000 obs. of  17 variables:
+ $ Invoice ID             : chr  "750-67-8428" "226-31-3081" "631-41-3108" "123-19-1176" ...
+ $ Branch                 : chr  "A" "C" "A" "A" ...
+ $ City                   : chr  "Yangon" "Naypyitaw" "Yangon" "Yangon" ...
+ $ Customer type          : chr  "Member" "Normal" "Normal" "Member" ...
+ $ Gender                 : chr  "Female" "Female" "Male" "Male" ...
+ $ Product line           : chr  "Health and beauty" "Electronic accessories" "Home and lifestyle" "Health and beauty" ...
+ $ Unit price             : num  74.7 15.3 46.3 58.2 86.3 ...
+ $ Quantity               : int  7 5 7 8 7 7 6 10 2 3 ...
+ $ Tax 5%                 : num  26.14 3.82 16.22 23.29 30.21 ...
+ $ Total                  : num  549 80.2 340.5 489 634.4 ...
+ $ Date                   : chr  "1/5/2019" "3/8/2019" "3/3/2019" "1/27/2019" ...
+ $ Time                   : chr  "13:08" "10:29" "13:23" "20:33" ...
+ $ Payment                : chr  "Ewallet" "Cash" "Credit card" "Ewallet" ...
+ $ cogs                   : num  522.8 76.4 324.3 465.8 604.2 ...
+ $ gross margin percentage: num  4.76 4.76 4.76 4.76 4.76 ...
+ $ gross income           : num  26.14 3.82 16.22 23.29 30.21 ...
+ $ Rating                 : num  9.1 9.6 7.4 8.4 5.3 4.1 5.8 8 7.2 5.9 ...
+
+Summary:
+     Invoice ID         Branch            City        Customer type 
+ Length   :1000   Length   :1000   Length   :1000   Length   :1000  
+ N.unique :1000   N.unique :   3   N.unique :   3   N.unique :   2  
+ N.blank  :   0   N.blank  :   0   N.blank  :   0   N.blank  :   0  
+ Min.nchar:  11   Min.nchar:   1   Min.nchar:   6   Min.nchar:   6  
+ Max.nchar:  11   Max.nchar:   1   Max.nchar:   9   Max.nchar:   6  
+                                                                    
+       Gender        Product line    Unit price       Quantity    
+ Length   :1000   Length   :1000   Min.   :10.08   Min.   : 1.00  
+ N.unique :   2   N.unique :   6   1st Qu.:32.88   1st Qu.: 3.00  
+ N.blank  :   0   N.blank  :   0   Median :55.23   Median : 5.00  
+ Min.nchar:   4   Min.nchar:  17   Mean   :55.67   Mean   : 5.51  
+ Max.nchar:   6   Max.nchar:  22   3rd Qu.:77.94   3rd Qu.: 8.00  
+                                   Max.   :99.96   Max.   :10.00  
+     Tax 5%            Total                Date             Time     
+ Min.   : 0.5085   Min.   :  10.68   Length   :1000   Length   :1000  
+ 1st Qu.: 5.9249   1st Qu.: 124.42   N.unique :  89   N.unique : 506  
+ Median :12.0880   Median : 253.85   N.blank  :   0   N.blank  :   0  
+ Mean   :15.3794   Mean   : 322.97   Min.nchar:   8   Min.nchar:   5  
+ 3rd Qu.:22.4453   3rd Qu.: 471.35   Max.nchar:   9   Max.nchar:   5  
+ Max.   :49.6500   Max.   :1042.65                                    
+      Payment          cogs        gross margin percentage  gross income    
+ Length   :1000   Min.   : 10.17   Min.   :4.762           Min.   : 0.5085  
+ N.unique :   3   1st Qu.:118.50   1st Qu.:4.762           1st Qu.: 5.9249  
+ N.blank  :   0   Median :241.76   Median :4.762           Median :12.0880  
+ Min.nchar:   4   Mean   :307.59   Mean   :4.762           Mean   :15.3794  
+ Max.nchar:  11   3rd Qu.:448.90   3rd Qu.:4.762           3rd Qu.:22.4453  
+                  Max.   :993.00   Max.   :4.762           Max.   :49.6500  
+     Rating      
+ Min.   : 4.000  
+ 1st Qu.: 5.500  
+ Median : 7.000  
+ Mean   : 6.973  
+ 3rd Qu.: 8.500  
+ Max.   :10.000  
+
+Column names:
+ [1] "Invoice ID"              "Branch"                 
+ [3] "City"                    "Customer type"          
+ [5] "Gender"                  "Product line"           
+ [7] "Unit price"              "Quantity"               
+ [9] "Tax 5%"                  "Total"                  
+[11] "Date"                    "Time"                   
+[13] "Payment"                 "cogs"                   
+[15] "gross margin percentage" "gross income"           
+[17] "Rating"                 
+
+Missing values by column:
+             Invoice ID                  Branch                    City 
+                      0                       0                       0 
+          Customer type                  Gender            Product line 
+                      0                       0                       0 
+             Unit price                Quantity                  Tax 5% 
+                      0                       0                       0 
+                  Total                    Date                    Time 
+                      0                       0                       0 
+                Payment                    cogs gross margin percentage 
+                      0                       0                       0 
+           gross income                  Rating 
+                      0                       0 
+                                       Variable       Mean     Median
+Unit price                           Unit price  55.672130  55.230000
+Quantity                               Quantity   5.510000   5.000000
+Tax 5%                                   Tax 5%  15.379369  12.088000
+Total                                     Total 322.966749 253.848000
+cogs                                       cogs 307.587380 241.760000
+gross margin percentage gross margin percentage   4.761905   4.761905
+gross income                       gross income  15.379369  12.088000
+Rating                                   Rating   6.972700   7.000000
+                                SD     Variance   Minimum     Maximum
+Unit price               26.494628   701.965331 10.080000   99.960000
+Quantity                  2.923431     8.546446  1.000000   10.000000
+Tax 5%                   11.708825   137.096594  0.508500   49.650000
+Total                   245.885335 60459.598018 10.678500 1042.650000
+cogs                    234.176510 54838.637658 10.170000  993.000000
+gross margin percentage   0.000000     0.000000  4.761905    4.761905
+gross income             11.708825   137.096594  0.508500   49.650000
+Rating                    1.718580     2.953518  4.000000   10.000000
+[UNIT 1] Completed.
+
+------------------------------------------------------------
+Running: scripts/course_concept_demos.R 
+------------------------------------------------------------
+
+[COURSE CONCEPT DEMOS] Separate teaching examples only
+Matrix A:
+     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6
+A[1, 2] = [1] 2
+Transpose of A:
+     [,1] [,2]
+[1,]    1    4
+[2,]    2    5
+[3,]    3    6
+Matrix product A %*% B:
+     [,1] [,2]
+[1,]   22   28
+[2,]   49   64
+Missing values in the separate demo:
+value label 
+    1     0 
+  value label
+1    10     A
+2    NA  <NA>
+3    30     C
+Complete rows in the separate demo:
+  value label
+1    10     A
+3    30     C
+left_join demo:
+  id left_value right_value
+1  1         L1        <NA>
+2  2         L2          R2
+3  3         L3          R3
+inner_join demo:
+  id left_value right_value
+1  2         L2          R2
+2  3         L3          R3
+full_join demo:
+  id left_value right_value
+1  1         L1        <NA>
+2  2         L2          R2
+3  3         L3          R3
+4  4       <NA>          R4
+anti_join demo (left rows without a match):
+  id left_value
+1  1         L1
+Long-format demo:
+# A tibble: 4 × 3
+  Product Quarter Sales
+  <chr>   <chr>   <dbl>
+1 A       Q1         10
+2 A       Q2         15
+3 B       Q1         12
+4 B       Q2         18
+Wide-format demo:
+# A tibble: 2 × 3
+  Product    Q1    Q2
+  <chr>   <dbl> <dbl>
+1 A          10    15
+2 B          12    18
+'data.frame':	3 obs. of  2 variables:
+ $ branch: Factor w/ 2 levels "A","B": 1 2 1
+ $ sales : num  20 25 22
+[COURSE CONCEPT DEMOS] Completed; demo data are separate from the supplied CSV.
+
+------------------------------------------------------------
+Running: scripts/unit2.R 
+------------------------------------------------------------
+
+[UNIT 2] Data cleaning, summaries, and visualization
+  Total_Rows Duplicate_Rows_After_First_Occurrence
+1       1000                                     0
+                                       Variable Missing_Count Missing_Percent
+Invoice ID                           Invoice ID             0               0
+Branch                                   Branch             0               0
+City                                       City             0               0
+Customer type                     Customer type             0               0
+Gender                                   Gender             0               0
+Product line                       Product line             0               0
+Unit price                           Unit price             0               0
+Quantity                               Quantity             0               0
+Tax 5%                                   Tax 5%             0               0
+Total                                     Total             0               0
+Date                                       Date             0               0
+Time                                       Time             0               0
+Payment                                 Payment             0               0
+cogs                                       cogs             0               0
+gross margin percentage gross margin percentage             0               0
+gross income                       gross income             0               0
+Rating                                   Rating             0               0
+   Branch      City        Product line    Total Quantity gross income Rating
+1       C Naypyitaw Fashion accessories 1042.650       10       49.650    6.6
+2       A    Yangon Fashion accessories 1039.290       10       49.490    8.7
+3       C Naypyitaw  Food and beverages 1034.460       10       49.260    4.5
+4       C Naypyitaw  Home and lifestyle 1023.750       10       48.750    8.0
+5       B  Mandalay  Home and lifestyle 1022.490       10       48.690    4.4
+6       B  Mandalay  Home and lifestyle 1022.385       10       48.685    4.9
+7       C Naypyitaw Fashion accessories 1020.705       10       48.605    8.7
+8       C Naypyitaw  Home and lifestyle 1003.590       10       47.790    4.8
+9       C Naypyitaw   Sports and travel 1002.120       10       47.720    5.2
+10      A    Yangon  Home and lifestyle  951.825       10       45.325    7.3
+   Average_Amount_Per_Item High_Value_Transaction
+1                 104.2650                   TRUE
+2                 103.9290                   TRUE
+3                 103.4460                   TRUE
+4                 102.3750                   TRUE
+5                 102.2490                   TRUE
+6                 102.2385                   TRUE
+7                 102.0705                   TRUE
+8                 100.3590                   TRUE
+9                 100.2120                   TRUE
+10                 95.1825                   TRUE
+# A tibble: 6 × 9
+  `Product line`    Transaction_Count Mean_Total Median_Total SD_Total IQR_Total
+  <fct>                         <int>      <dbl>        <dbl>    <dbl>     <dbl>
+1 Food and beverag…               174       323.         252.     247.      318.
+2 Sports and travel               166       332.         271.     248.      344.
+3 Electronic acces…               170       320.         241.     246.      357.
+4 Fashion accessor…               178       305.         212.     244.      337.
+5 Home and lifesty…               160       337.         258.     255.      366.
+6 Health and beauty               152       324.         272.     238.      367.
+# ℹ 3 more variables: Mean_Gross_Income <dbl>, Mean_Rating <dbl>,
+#   Total_Revenue <dbl>
+# A tibble: 3 × 6
+  Branch City      Transactions Revenue Average_Total Average_Rating
+  <fct>  <fct>            <int>   <dbl>         <dbl>          <dbl>
+1 A      Yangon             340 106200.          312.           7.03
+2 B      Mandalay           332 106198.          320.           6.82
+3 C      Naypyitaw          328 110569.          337.           7.07
+                 Variable    N      Mean  Median         SD     Variance
+Unit price     Unit price 1000  55.67213  55.230  26.494628   701.965331
+Quantity         Quantity 1000   5.51000   5.000   2.923431     8.546446
+Tax 5%             Tax 5% 1000  15.37937  12.088  11.708825   137.096594
+Total               Total 1000 322.96675 253.848 245.885335 60459.598018
+cogs                 cogs 1000 307.58738 241.760 234.176510 54838.637658
+gross income gross income 1000  15.37937  12.088  11.708825   137.096594
+Rating             Rating 1000   6.97270   7.000   1.718580     2.953518
+                   IQR CV_Percent
+Unit price    45.06000   47.59047
+Quantity       5.00000   53.05682
+Tax 5%        16.52037   76.13333
+Total        346.92787   76.13333
+cogs         330.40750   76.13333
+gross income  16.52037   76.13333
+Rating         3.00000   24.64727
+                 Variable    Skewness Excess_Kurtosis
+Unit price     Unit price 0.007056230     -1.22206222
+Quantity         Quantity 0.012902251     -1.21903927
+Tax 5%             Tax 5% 0.889893881     -0.09329206
+Total               Total 0.889893881     -0.09329206
+cogs                 cogs 0.889893881     -0.09329206
+gross income gross income 0.889893881     -0.09329206
+Rating             Rating 0.008982638     -1.15552546
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit2_total_histogram.png
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit2_total_density.png
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit2_total_boxplot.png
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit2_product_line_bar.png
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit2_total_by_product_line.png
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit2_branch_revenue.png
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit2_unit_price_vs_total_scatter.png
+[UNIT 2] Completed.
+
+------------------------------------------------------------
+Running: scripts/unit3.R 
+------------------------------------------------------------
+
+[UNIT 3] Simple linear regression
+Correlation between cogs and gross income:
+[1] 1
+
+Call:
+lm(formula = `gross income` ~ cogs, data = regression_data)
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-7.328e-15 -9.440e-16 -3.170e-16  6.040e-16  2.640e-13 
+
+Coefficients:
+             Estimate Std. Error   t value Pr(>|t|)    
+(Intercept) 7.190e-15  4.468e-16 1.609e+01   <2e-16 ***
+cogs        5.000e-02  1.156e-18 4.325e+16   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.557e-15 on 998 degrees of freedom
+Multiple R-squared:      1,	Adjusted R-squared:      1 
+F-statistic: 1.871e+33 on 1 and 998 DF,  p-value: < 2.2e-16
+
+     Intercept Slope R_Squared Adjusted_R_Squared Slope_P_Value
+1 7.190187e-15  0.05         1                  1             0
+  Residual_Standard_Error Observations
+1             8.55652e-15         1000
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit3_simple_regression.png
+      cogs       fit       lwr       upr
+1 118.4975  5.924875  5.924875  5.924875
+2 241.7600 12.088000 12.088000 12.088000
+3 448.9050 22.445250 22.445250 22.445250
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit3_residuals_vs_fitted.png
+[UNIT 3] Completed.
+
+------------------------------------------------------------
+Running: scripts/unit4.R 
+------------------------------------------------------------
+
+[UNIT 4] Multiple linear regression
+             Unit price Quantity Tax 5%  Total   cogs gross income Rating
+Unit price        1.000    0.011  0.634  0.634  0.634        0.634 -0.009
+Quantity          0.011    1.000  0.706  0.706  0.706        0.706 -0.016
+Tax 5%            0.634    0.706  1.000  1.000  1.000        1.000 -0.036
+Total             0.634    0.706  1.000  1.000  1.000        1.000 -0.036
+cogs              0.634    0.706  1.000  1.000  1.000        1.000 -0.036
+gross income      0.634    0.706  1.000  1.000  1.000        1.000 -0.036
+Rating           -0.009   -0.016 -0.036 -0.036 -0.036       -0.036  1.000
+
+Call:
+lm(formula = Total ~ `Unit price` + Quantity + Branch + Payment, 
+    data = model_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-220.920  -47.311    1.923   46.467  216.146 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        -330.8386     9.2449 -35.786   <2e-16 ***
+`Unit price`          5.8163     0.0975  59.656   <2e-16 ***
+Quantity             58.7424     0.8829  66.537   <2e-16 ***
+BranchB               1.3547     6.2957   0.215    0.830    
+BranchC               7.4774     6.3233   1.183    0.237    
+PaymentCredit card   10.3891     6.3906   1.626    0.104    
+PaymentEwallet        0.5713     6.2229   0.092    0.927    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 81.56 on 993 degrees of freedom
+Multiple R-squared:  0.8906,	Adjusted R-squared:   0.89 
+F-statistic:  1348 on 6 and 993 DF,  p-value: < 2.2e-16
+
+                Term     Estimate Std. Error      t value      Pr(>|t|)
+1        (Intercept) -330.8386025 9.24487520 -35.78616208 7.938730e-181
+2       `Unit price`    5.8162741 0.09749709  59.65587605  0.000000e+00
+3           Quantity   58.7423842 0.88285320  66.53697866  0.000000e+00
+4            BranchB    1.3546730 6.29570544   0.21517415  8.296757e-01
+5            BranchC    7.4774201 6.32332339   1.18251426  2.372848e-01
+6 PaymentCredit card   10.3890611 6.39065210   1.62566526  1.043382e-01
+7     PaymentEwallet    0.5713192 6.22285752   0.09180979  9.268677e-01
+      Observations R_Squared Adjusted_R_Squared Residual_Standard_Error
+value         1000 0.8906435          0.8899827                81.55735
+      F_Statistic F_DF1 F_DF2 Overall_Model_P_Value
+value    1347.898     6   993                     0
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/unit4_observed_vs_predicted.png
+  Unit price Quantity Branch Payment      fit      lwr      upr
+1      55.23        5      A Ewallet 284.6775 124.2556 445.0993
+
+Check - additive model vs model with interaction:
+Additive model (Total ~ Unit price + Quantity + Branch + Payment): R-squared = 0.890643
+Model with interaction (Total ~ Unit price * Quantity):            R-squared = 1.000000
+Residual standard error of the additive model: 81.5573  on 1000 observations.
+[UNIT 4] Completed.
+
+------------------------------------------------------------
+Running: scripts/data_analysis.R 
+------------------------------------------------------------
+
+[INTEGRATED PROJECT] Starting combined supermarket analysis
+  Rows Columns Missing_Cells Duplicate_Rows Distinct_Invoices
+1 1000      17             0              0              1000
+# A tibble: 6 × 7
+  `Product line`       Transactions Total_Revenue Average_Invoice Median_Invoice
+  <chr>                       <int>         <dbl>           <dbl>          <dbl>
+1 Food and beverages            174        56145.            323.           252.
+2 Sports and travel             166        55123.            332.           271.
+3 Electronic accessor…          170        54338.            320.           241.
+4 Fashion accessories           178        54306.            305.           212.
+5 Home and lifestyle            160        53862.            337.           258.
+6 Health and beauty             152        49194.            324.           272.
+# ℹ 2 more variables: Average_Gross_Income <dbl>, Average_Rating <dbl>
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/integrated_revenue_by_product_line.png
+Correlation between Quantity and Total: 0.7055102 
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/integrated_quantity_vs_total.png
+             Df   Sum Sq Mean Sq F value Pr(>F)
+Branch        2   106988   53494   0.885  0.413
+Residuals   997 60292151   60474               
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/integrated_total_by_branch.png
+[INTEGRATED PROJECT] Completed.
+
+------------------------------------------------------------
+Running: scripts/problem_statements.R 
+------------------------------------------------------------
+
+[PROBLEM STATEMENTS] Running seven distinct questions
+
+------------------------------------------------------------
+PS1: Revenue, volume and rating by product line 
+------------------------------------------------------------
+# A tibble: 6 × 8
+  `Product line`      Transactions Revenue Mean_Total Median_Total Mean_Quantity
+  <fct>                      <int>   <dbl>      <dbl>        <dbl>         <dbl>
+1 Food and beverages           174  56145.       323.         252.          5.47
+2 Sports and travel            166  55123.       332.         271.          5.54
+3 Electronic accesso…          170  54338.       320.         241.          5.71
+4 Fashion accessories          178  54306.       305.         212.          5.07
+5 Home and lifestyle           160  53862.       337.         258.          5.69
+6 Health and beauty            152  49194.       324.         272.          5.62
+# ℹ 2 more variables: Mean_Gross_Income <dbl>, Mean_Rating <dbl>
+One-way ANOVA of invoice total by product line:
+                Df   Sum Sq Mean Sq F value Pr(>F)
+`Product line`   5   102506   20501   0.338   0.89
+Residuals      994 60296633   60661               
+
+------------------------------------------------------------
+PS2: Branch comparison (Branch and City are one-to-one in this dataset) 
+------------------------------------------------------------
+# A tibble: 3 × 7
+  Branch City      Transactions Revenue Mean_Total Median_Total Mean_Rating
+  <fct>  <fct>            <int>   <dbl>      <dbl>        <dbl>       <dbl>
+1 C      Naypyitaw          328 110569.       337.         271.        7.07
+2 A      Yangon             340 106200.       312.         241.        7.03
+3 B      Mandalay           332 106198.       320.         253.        6.82
+One-way ANOVA of invoice total by branch:
+             Df   Sum Sq Mean Sq F value Pr(>F)
+Branch        2   106988   53494   0.885  0.413
+Residuals   997 60292151   60474               
+
+------------------------------------------------------------
+PS3: Member vs Normal customer invoice totals 
+------------------------------------------------------------
+# A tibble: 2 × 7
+  `Customer type`     N Mean_Total Median_Total SD_Total Revenue Mean_Rating
+  <fct>           <int>      <dbl>        <dbl>    <dbl>   <dbl>       <dbl>
+1 Member            501       328.         266.     248. 164223.        6.94
+2 Normal            499       318.         237.     244. 158743.        7.01
+
+	Welch Two Sample t-test
+
+data:  Total by Customer type
+t = 0.62155, df = 997.84, p-value = 0.5344
+alternative hypothesis: true difference in means between group Member and group Normal is not equal to 0
+95 percent confidence interval:
+ -20.85669  40.19359
+sample estimates:
+mean in group Member mean in group Normal 
+            327.7913             318.1229 
+
+Welch two-sample t-test of Member vs Normal invoice totals: t = 0.6215 , df = 997.84 , p = 0.5344 
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/ps3_customer_type_boxplot_member.png
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/ps3_customer_type_boxplot_normal.png
+Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/ps3_customer_type_boxplot_grid.png
+Boxplot titles computed from the data: n(Member) = 501, n(Normal) = 499
+
+------------------------------------------------------------
+PS4: Payment-method usage and invoice totals 
+------------------------------------------------------------
+# A tibble: 3 × 6
+  Payment         N Revenue Mean_Total Median_Total Mean_Rating
+  <fct>       <int>   <dbl>      <dbl>        <dbl>       <dbl>
+1 Ewallet       345 109993.       319.         254.        6.95
+2 Cash          344 112207.       326.         263.        6.97
+3 Credit card   311 100767.       324.         240.        7.00
+One-way ANOVA of invoice total by payment method:
+             Df   Sum Sq Mean Sq F value Pr(>F)
+Payment       2     9825    4913   0.081  0.922
+Residuals   997 60389313   60571               
+
+------------------------------------------------------------
+PS5: Association between quantity purchased and invoice total 
+------------------------------------------------------------
+
+	Pearson's product-moment correlation
+
+data:  sales_clean$Quantity and sales_clean$Total
+t = 31.449, df = 998, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6729497 0.7353418
+sample estimates:
+      cor 
+0.7055102 
+
+Pearson correlation Quantity vs Total: r = 0.7055 , n = 1000 , p = < 2.2e-16 
+Regression Total ~ Quantity + Unit price:
+
+Call:
+lm(formula = Total ~ Quantity + `Unit price`, data = sales_clean)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-211.831  -47.400    0.434   45.925  217.304 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -324.52221    7.69334  -42.18   <2e-16 ***
+Quantity       58.77155    0.88305   66.56   <2e-16 ***
+`Unit price`    5.81364    0.09744   59.67   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 81.59 on 997 degrees of freedom
+Multiple R-squared:  0.8901,	Adjusted R-squared:  0.8899 
+F-statistic:  4038 on 2 and 997 DF,  p-value: < 2.2e-16
+
+NOTE: Total = 1.05 * Quantity * Unit price in every row of this dataset, so this
+model reproduces the invoice formula rather than discovering a new driver.
+
+------------------------------------------------------------
+PS6: Customer ratings and their association with invoice total 
+------------------------------------------------------------
+    N Mean_Rating Median_Rating SD_Rating Min_Rating Max_Rating IQR_Rating
+ 1000      6.9727             7   1.71858          4         10          3
+
+	Pearson's product-moment correlation
+
+data:  sales_clean$Rating and sales_clean$Total
+t = -1.152, df = 998, p-value = 0.2496
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.09821291  0.02560923
+sample estimates:
+       cor 
+-0.0364417 
+
+Pearson correlation Rating vs Total: r = -0.0364 , n = 1000 , p = 0.2496 
+
+------------------------------------------------------------
+PS7: Revenue by month and weekday (data cover 2019-01-01 to 2019-03-30) 
+------------------------------------------------------------
+# A tibble: 3 × 4
+  Month   Transactions Revenue Mean_Total
+  <chr>          <int>   <dbl>      <dbl>
+1 2019-01          352 116292.       330.
+2 2019-02          303  97219.       321.
+3 2019-03          345 109456.       317.
+# A tibble: 7 × 4
+  Weekday   Transactions Revenue Mean_Total
+  <chr>            <int>   <dbl>      <dbl>
+1 Saturday           164  56121.       342.
+2 Tuesday            158  51482.       326.
+3 Thursday           138  45349.       329.
+4 Sunday             133  44458.       334.
+5 Friday             139  43926.       316.
+6 Wednesday          143  43731.       306.
+7 Monday             125  37899.       303.
+
+Consolidated inferential tests:
+      Problem_statement                                                    Test
+      PS1: product line                    One-way ANOVA (Total ~ Product line)
+            PS2: branch                          One-way ANOVA (Total ~ Branch)
+     PS3: customer type Welch two-sample t-test (unequal variances not assumed)
+    PS4: payment method                         One-way ANOVA (Total ~ Payment)
+ PS5: quantity vs total                     Pearson correlation test (cor.test)
+   PS6: rating vs total                     Pearson correlation test (cor.test)
+  Statistic       DF       P_value Significant_at_5pct
+  0.3379648   5.0000  8.900398e-01               FALSE
+  0.8845828   2.0000  4.132102e-01               FALSE
+  0.6215476 997.8409  5.343814e-01               FALSE
+  0.0811041   2.0000  9.221038e-01               FALSE
+  0.7055102 998.0000 2.063948e-151                TRUE
+ -0.0364417 998.0000  2.495969e-01               FALSE
+
+[PROBLEM STATEMENTS] Completed. Tables in outputs/reports/ps*.csv,
+test outputs in outputs/reports/ps*_*.txt, plots in outputs/plots/.
+
+------------------------------------------------------------
+Running: scripts/report_figures.R 
+------------------------------------------------------------
+
+[REPORT FIGURES] Building report figures
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig1_revenue_by_product_line.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig2_revenue_by_branch.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig3_customer_type_boxplot.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig4_payment_methods.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig5_quantity_vs_total.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig6_rating_distribution.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig7_monthly_revenue.png
+
+[REPORT FIGURES] Completed.
+
+------------------------------------------------------------
+Running: scripts/verify_results.R 
+------------------------------------------------------------
+
+[VERIFICATION] Recomputing report figures from the raw CSV
+             Quantity Value_from_analysis_scripts Value_recomputed_from_raw_csv
+                 Rows                        1000                          1000
+              Columns                          17                            17
+        Missing_cells                           0                             0
+       Duplicate_rows                           0                             0
+   Unique_invoice_ids                        1000                          1000
+        Total_revenue                  322966.749                    322966.749
+   Mean_invoice_total                  322.966749                    322.966749
+ Median_invoice_total                     253.848                       253.848
+     SD_invoice_total            245.885335100972              245.885335100972
+    Mean_gross_income                   15.379369                     15.379369
+          Mean_rating                      6.9727                        6.9727
+        Mean_quantity                        5.51                          5.51
+      Mean_unit_price                    55.67213                      55.67213
+   Cor_quantity_total           0.705510185943306             0.705510185943306
+     Cor_rating_total         -0.0364417049970184           -0.0364417049970184
+  Cor_unitprice_total           0.633962088589069             0.633962088589069
+             Date_min                  2019-01-01                    2019-01-01
+             Date_max                  2019-03-30                    2019-03-30
+  Member_transactions                         501                           501
+  Normal_transactions                         499                           499
+ Match
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+  TRUE
+                                 Identity Holds
+          Total == 1.05 * cogs (all rows)  TRUE
+ cogs == Quantity * Unit price (all rows)  TRUE
+        Tax 5% == gross income (all rows)  TRUE
+         Tax 5% == 0.05 * cogs (all rows)  TRUE
+         gross margin percentage constant  TRUE
+
+All 20 reported quantities recomputed and matched.
+
+[VERIFICATION] Completed.
+Warning message:
+In summary.lm(simple_model) :
+  essentially perfect fit: summary may be unreliable
+
+============================================================
+PROJECT RUN FINISHED
+Review tables in outputs/reports/ and plots in outputs/plots/.
+Report figures in report/figures/; verification table in
+outputs/reports/verification_results.csv.
+============================================================

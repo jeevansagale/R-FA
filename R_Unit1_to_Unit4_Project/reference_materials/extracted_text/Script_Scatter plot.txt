@@ -1,0 +1,102 @@
+#Scatter plot with geom_point(Two numeric variable)
+View(mtcars)
+
+ggplot(mtcars, aes(disp, mpg))+geom_point()# showing a negative
+relation
+
+#Adding color, changing size, changing shape
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(shape=21,    size=5, color="black",
+fill="white")#explore options with shape
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(size=2, color="blue", shape="triangle")
+
+#Add regression line
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(size=0.8, color="blue")+geom_smooth()
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(size=0.8, color="blue")+geom_smooth(method=lm)#lm-
+linear model
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(size=0.8, color="blue")+geom_smooth(method=lm,
+linetype="dashed")#lm-linear model
+
+#Titles
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(size=1, color="blue", shape="triangle")+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)
+
+
+
+#Mapping additional factorial(nominal) variable over scatter plot
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(shape=factor(am)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(shape=factor(am)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)+
+  geom_smooth(method=lm)
+
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(size=factor(am)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(color=factor(am)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)
+
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(shape=factor(am), color=factor(cyl)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)
+
+#Adding regression line as per cyl
+ggplot(mtcars, aes(disp, mpg, color=factor(cyl),
+shape=factor(cyl)))+
+  geom_point()+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)+geom_smooth(method=lm)
+
+
+
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(shape=factor(am), color=factor(cyl)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)+geom_smooth(method=lm)
+
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(shape=factor(am), color=factor(cyl),
+size=factor(vs)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)
+#Use of facet_wrap
+ggplot(mtcars, aes(disp, mpg, color=factor(cyl)))+
+  geom_point()+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)+facet_wrap(~cyl)
+
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(shape=factor(am), color=factor(cyl)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)+facet_wrap(~vs)
+
+
+ggplot(mtcars, aes(disp, mpg))+
+  geom_point(aes(shape=factor(am)))+
+  labs(x="Displacemet", y="Milege", title ="Displacement Vs Milege"
+)+facet_wrap(~cyl)
+

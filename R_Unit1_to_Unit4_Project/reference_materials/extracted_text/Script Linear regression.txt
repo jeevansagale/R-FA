@@ -1,0 +1,66 @@
+9/30/2025                               SDAUR 25-26 - Posit Cloud
+
+
+  install.packages("ggplot2")
+  library(ggplot2)
+  install.packages("dplyr")
+  library(dplyr)
+  install.packages("broom")
+  library(broom)
+  install.packages("ggpubr")
+  library(ggpubr)
+
+  #Import data set
+  #Check summary of the data
+  summary(income_data)
+  #Check whether the dependent variable follows normal distribution
+  hist(income_data$happiness)
+
+  #scatter plot
+  ggplot(income_data,aes(x=income,y=happiness))+geom_point()
+
+  ggplot(income_data,aes(x=income,y=happiness))+geom_line()
+
+  #Regression line
+  ggplot(income_data,aes(x=income,y=happiness))+geom_point() +
+    geom_smooth(method='lm')
+
+  #code for linear model
+  income.happiness.lm <- lm(happiness ~ income, data = income_data)
+  #summary of the model
+  summary(income.happiness.lm)
+
+  #plot regression line
+  cor(income_data)
+  ggplot(income_data, aes(x=income, y=happiness))+geom_point()+
+    geom_smooth(method="lm", col="red")+
+    stat_regline_equation()+
+    labs(title = "Income Vs Happiness")
+
+  #OR
+  income.graph=ggplot(income_data, aes(x=income, y=happiness))+geom_point()
+
+
+  income.graph=income.graph + geom_smooth(method="lm", col="red")
+  income.graph
+
+  #Equation of regression line
+  income.graph <- income.graph +
+    stat_regline_equation()
+  income.graph
+
+  #title assign to graph
+  income.graph +
+    theme_transparent() +
+https://posit.cloud/content/10581794                                          1/2
+9/30/2025                                 SDAUR 25-26 - Posit Cloud
+
+      labs(title = "Reported happiness as a function of income",
+           x = "Income (x$10,000)",
+           y = "Happiness score (0 to 10)")
+
+
+
+
+https://posit.cloud/content/10581794                                  2/2
+

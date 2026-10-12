@@ -1,0 +1,54 @@
+#dplyr
+install.packages("dplyr")
+library(dplyr)
+data("storms")
+#select: extraction by column
+s1=select(storms, status, wind)
+s2=select(storms,-status,-wind)
+s3=select(storms,name:day)
+s4=select(storms,2:4)
+s5=select(storms,1,8,10,11)
+s6=select(storms, contains("force"))
+
+
+#filter: extraction by row
+f1=head(storms,10)
+f2=filter(f1,wind>=30)
+f3=filter(f1,wind>=30,status=="tropical storm")
+
+
+#using pipeoperator
+f4=filter(f1, wind     >=      30, status         %in%   c("tropical storm"))
+
+#for calculations from existing columns using mutate
+m1=mutate(f1, ratio = pressure / wind)
+m2=slice(f1,2:6)
+
+
+A=c(1,3,5)
+m=min(A)
+avg=mean(A)
+#pointwise min of columns
+a=data.frame(pmin(storms$month, storms$hour))
+
+#summarise: to change the unit (big data to small values)
+Avg_mpg=summarise(mtcars,avg=mean(mpg))
+auto_yn=group_by(mtcars,am)
+auto_yn1=summarise(auto_yn,avg=mean(mpg))
+
+#pipe operator use "ctr+shft+m" for this operator
+New= group_by(mtcars,am) %>% summarise(avg=mean(mpg))
+
+f1 %>% summarise(average = mean(hour), total = sum(hour), count = n())
+
+n_distinct(f1$hour) #The number of distinct values in a vector
+
+#arrange in ascending or descending
+B=arrange(storms,pressure)
+C=arrange(storms,desc(pressure))
+
+
+View(mtcars)
+#extract by variables i. e column
+select
+
