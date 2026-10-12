@@ -1,0 +1,6 @@
+
+	Pearson's Chi-squared test
+
+data:  table(sales_clean$Branch, sales_clean$`Customer type`)
+X-squared = 0.41881, df = 2, p-value = 0.8111
+

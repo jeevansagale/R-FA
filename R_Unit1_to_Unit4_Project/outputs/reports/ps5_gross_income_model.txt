@@ -1,0 +1,19 @@
+
+Call:
+lm(formula = `gross income` ~ `Unit price`, data = sales_clean)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-22.7273  -5.6916  -0.1257   5.5917  22.0475 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -0.21819    0.66697  -0.327    0.744    
+`Unit price`  0.28017    0.01082  25.897   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 9.06 on 998 degrees of freedom
+Multiple R-squared:  0.4019,	Adjusted R-squared:  0.4013 
+F-statistic: 670.6 on 1 and 998 DF,  p-value: < 2.2e-16
+

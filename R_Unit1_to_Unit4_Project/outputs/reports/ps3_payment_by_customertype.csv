@@ -1,0 +1,7 @@
+"Payment","Customer_Type","Transactions","Share_within_segment"
+"Cash","Member",168,33.5
+"Credit card","Member",172,34.3
+"Ewallet","Member",161,32.1
+"Cash","Normal",176,35.3
+"Credit card","Normal",139,27.9
+"Ewallet","Normal",184,36.9

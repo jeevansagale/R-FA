@@ -49,3 +49,18 @@
 - Windows fallback dataset path NOT TESTED on this Linux host.
 - Report placeholders left: branch, submission date, signatures. Names/PRNs filled 2026-10-12;
   superseded files moved to `FA-2/Junk/` (old provisional report, previous ZIP, failed extracts).
+
+## 2026-10-13 — problem-statement overhaul (revised brief, 5 new PSs)
+
+- Removed old scripts: `scripts/data_analysis.R` deleted (guards folded into new PS0);
+  old seven-PS `problem_statements.R`, `report_figures.R`, `verify_results.R` rewritten.
+- New `problem_statements.R`: PS0 data-quality guard; PS1 ratings/gross income by line
+  (2 ANOVAs); PS2 branch revenue (ANOVA) + customer mix (chi-square independence);
+  PS3 payment × gender / customer type (2 chi-squares); PS4 hour/weekday peaks
+  (2 goodness-of-fit tests); PS5 price–quantity / price–gross correlations + regression.
+  Fixed two fresh bugs found by the run (wrong ANOVA term name; data.frame cell
+  extraction) plus a self-inflicted verify bug (derived columns counted in ncol(raw)).
+- New `report_figures.R` (fig1–fig5, grid/facet patterns), new `verify_results.R`
+  (19/19 matched, 5/5 identities hold), new report DOCX/PDF (black headings, no blue),
+  all docs + both READMEs rewritten for PS1–PS5.
+- Old outputs deleted and regenerated; old report draft already in `FA-2/Junk/`.

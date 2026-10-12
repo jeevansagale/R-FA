@@ -1,0 +1,6 @@
+
+	Chi-squared test for given probabilities
+
+data:  table(sales_clean$Hour)
+X-squared = 18.292, df = 10, p-value = 0.05023
+

@@ -1,12 +1,12 @@
 
 	Pearson's product-moment correlation
 
-data:  sales_clean$Quantity and sales_clean$Total
-t = 31.449, df = 998, p-value < 2.2e-16
+data:  sales_clean$`Unit price` and sales_clean$`gross income`
+t = 25.897, df = 998, p-value < 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.6729497 0.7353418
+ 0.5953677 0.6696376
 sample estimates:
       cor 
-0.7055102 
+0.6339621 
 

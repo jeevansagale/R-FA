@@ -1,3 +1,0 @@
-             Df   Sum Sq Mean Sq F value Pr(>F)
-Payment       2     9825    4913   0.081  0.922
-Residuals   997 60389313   60571               

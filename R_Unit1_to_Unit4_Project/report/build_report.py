@@ -2,11 +2,11 @@
 """Build Supermarket_Sales_FA2_Report.docx from verified project outputs.
 
 Reads the executed R results (outputs/reports/*.csv, *.txt) and the report
-figures (report/figures/fig1..fig7.png), and writes a .docx that follows the
-structure and formatting of the instructor sample
+figures (report/figures/fig1..fig5.png + pccoe_logo.png), and writes a .docx
+that follows the structure of the instructor sample
 ("Sample Report for FA2 Activity.docx"): A4, sample margins, Times New Roman,
-centered cover page, red Flow list, blue problem-statement headings, result
-table + R code + figure + conclusion per problem statement.
+centered cover page with logo and team, red Flow list, black problem-statement
+headings, result table + R code + figure + conclusion per problem statement.
 
 Pure standard library (zipfile/struct/csv/re) so it runs anywhere.
 Usage: python3 report/build_report.py   (run from the project root)
@@ -15,7 +15,6 @@ import csv
 import os
 import re
 import struct
-import sys
 import zipfile
 from xml.sax.saxutils import escape
 
@@ -104,7 +103,7 @@ def para(runs, jc="both", style=None, page_break=False, spacing_after=None):
     return f'<w:p><w:pPr>{"".join(ppr)}</w:pPr>{body}</w:p>'
 
 
-T = lambda t, **kw: (t, kw)  # text run helper
+T = lambda t, **kw: (t, kw)
 
 
 def simple(text, size=14, bold=False, color=None, jc="both", italic=False):
@@ -125,11 +124,10 @@ def table(headers, rows, widths, header_bold=True):
         for ci, (cell, w) in enumerate(zip(row, widths)):
             is_header = ri == 0
             cell_runs = runs_xml([T(cell, size=12, bold=(is_header and header_bold))])
-            align = "center" if (is_header or ci == 0) else "center"
             tcs.append(
                 f'<w:tc><w:tcPr><w:tcW w:w="{w}" w:type="dxa"/>{CELL_BORDER}'
                 f'<w:vAlign w:val="center"/></w:tcPr>'
-                f'<w:p><w:pPr><w:jc w:val="{align}"/></w:pPr>{cell_runs}</w:p></w:tc>')
+                f'<w:p><w:pPr><w:jc w:val="center"/></w:pPr>{cell_runs}</w:p></w:tc>')
         trpr = '<w:trPr><w:jc w:val="center"/></w:trPr>' if ri == 0 else ''
         trs.append(f"<w:tr>{trpr}{''.join(tcs)}</w:tr>")
     return (f'<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/>'
@@ -142,7 +140,6 @@ FIG_FILES = []
 
 
 def inline_image(fig_file, width_in):
-    """Centered image with no caption (cover logo)."""
     FIG_COUNTER[0] += 1
     idx = FIG_COUNTER[0]
     FIG_FILES.append(fig_file)
@@ -152,38 +149,21 @@ def inline_image(fig_file, width_in):
     cx, cy = int(width_in * EMU_PER_INCH), int(h_in * EMU_PER_INCH)
     drawing = (
         f'<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0">'
-        f'<wp:extent cx="{cx}" cy="{cy}"/><wp:docPr id="{idx}" name="logo"/>'
+        f'<wp:extent cx="{cx}" cy="{cy}"/><wp:docPr id="{idx}" name="img{idx}"/>'
         f'<wp:cNvGraphicFramePr><a:graphicFrameLocks locked="1"/></wp:cNvGraphicFramePr>'
         f'<a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">'
-        f'<pic:pic><pic:nvPicPr><pic:cNvPr id="{idx}" name="logo"/><pic:cNvPicPr/></pic:nvPicPr>'
+        f'<pic:pic><pic:nvPicPr><pic:cNvPr id="{idx}" name="img{idx}"/><pic:cNvPicPr/></pic:nvPicPr>'
         f'<pic:blipFill><a:blip r:embed="{rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>'
         f'<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="{cx}" cy="{cy}"/></a:xfrm>'
         f'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr>'
         f'</pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>')
-    return f'<w:p><w:pPr><w:jc w:val="center"/></w:pPr>{drawing}</w:p>'
+    return f'<w:p><w:pPr><w:jc w:val="center"/></w:pPr>{drawing}</w:p>', rid
 
 
-def figure(fig_file, caption):
-    FIG_COUNTER[0] += 1
-    idx = FIG_COUNTER[0]
-    FIG_FILES.append(fig_file)
-    rid = f"rIdFig{idx}"
-    pw, ph = png_size(os.path.join(FIG, fig_file))
-    h_in = FIG_W_IN * ph / pw
-    cx, cy = int(FIG_W_IN * EMU_PER_INCH), int(h_in * EMU_PER_INCH)
-    drawing = (
-        f'<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0">'
-        f'<wp:extent cx="{cx}" cy="{cy}"/><wp:docPr id="{idx}" name="{escape(caption)}"/>'
-        f'<wp:cNvGraphicFramePr><a:graphicFrameLocks locked="1"/></wp:cNvGraphicFramePr>'
-        f'<a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">'
-        f'<pic:pic><pic:nvPicPr><pic:cNvPr id="{idx}" name="{escape(caption)}"/><pic:cNvPicPr/></pic:nvPicPr>'
-        f'<pic:blipFill><a:blip r:embed="{rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>'
-        f'<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="{cx}" cy="{cy}"/></a:xfrm>'
-        f'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr>'
-        f'</pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>')
-    pic_para = f'<w:p><w:pPr><w:jc w:val="center"/></w:pPr>{drawing}</w:p>'
+def figure(fig_file, caption, width_in=FIG_W_IN):
+    pic_para, _ = inline_image(fig_file, width_in)
     cap_para = para([T(caption, size=12, italic=True)], jc="center")
-    return pic_para, cap_para, rid
+    return pic_para, cap_para
 
 
 def code_block(lines):
@@ -194,35 +174,30 @@ def code_block(lines):
 
 
 # ---------------------------------------------------------------- data load
-ps1 = read_csv(os.path.join(REP, "ps1_product_line_revenue.csv"))
-ps2 = read_csv(os.path.join(REP, "ps2_branch_comparison.csv"))
-ps3 = read_csv(os.path.join(REP, "ps3_customer_type.csv"))
-ps4 = read_csv(os.path.join(REP, "ps4_payment_method.csv"))
-ps6 = read_csv(os.path.join(REP, "ps6_rating_summary.csv"))[0]
-ps7m = read_csv(os.path.join(REP, "ps7_monthly_revenue.csv"))
-ps7d = read_csv(os.path.join(REP, "ps7_weekday_revenue.csv"))
+ps1 = read_csv(os.path.join(REP, "ps1_product_line_performance.csv"))
+ps2r = read_csv(os.path.join(REP, "ps2_branch_revenue.csv"))
+ps2c = read_csv(os.path.join(REP, "ps2_branch_customer_counts.csv"))
+ps3g = read_csv(os.path.join(REP, "ps3_payment_by_gender.csv"))
+ps3c = read_csv(os.path.join(REP, "ps3_payment_by_customertype.csv"))
+ps4h = read_csv(os.path.join(REP, "ps4_hourly.csv"))
+ps4p = read_csv(os.path.join(REP, "ps4_part_of_day.csv"))
+ps4d = read_csv(os.path.join(REP, "ps4_weekday.csv"))
+ps5p = read_csv(os.path.join(REP, "ps5_profitability_by_product.csv"))
 tests = {r["Problem_statement"]: r for r in read_csv(os.path.join(REP, "ps_inferential_tests.csv"))}
 unit3 = read_csv(os.path.join(REP, "unit3_simple_regression_metrics.csv"))[0]
 unit4m = read_csv(os.path.join(REP, "unit4_model_metrics.csv"))[0]
-unit4f = read_csv(os.path.join(REP, "unit4_model_form_comparison.csv"))
-ps5txt = read_txt(os.path.join(REP, "ps5_quantity_total_correlation.txt"))
-ps6txt = read_txt(os.path.join(REP, "ps6_rating_total_correlation.txt"))
 
-t_ps1, t_ps2 = tests["PS1: product line"], tests["PS2: branch"]
-t_ps3, t_ps4 = tests["PS3: customer type"], tests["PS4: payment method"]
-t_ps5, t_ps6 = tests["PS5: quantity vs total"], tests["PS6: rating vs total"]
-
-ps1 = sorted(ps1, key=lambda r: -float(r["Revenue"]))
-rev_total = sum(float(r["Revenue"]) for r in ps1)
+t = tests
+rev_total = sum(float(r["Revenue"]) for r in ps2r)
 
 # ---------------------------------------------------------------- document
-B = []  # body blocks
+B = []
 
 # ---- cover page
 B.append(simple("PIMPRI CHINCHWAD EDUCATION TRUST'S", size=14, jc="center"))
 B.append(simple("", size=14, jc="center"))
 B.append(simple("PIMPRI CHINCHWAD COLLEGE OF ENGINEERING", size=18, jc="center"))
-B.append(inline_image("pccoe_logo.png", 1.40))
+B.append(inline_image("pccoe_logo.png", 1.40)[0])
 B.append(simple("Department of AS&H", size=24, bold=True, jc="center"))
 B.append(simple("Report of FA-2 activity", size=20, bold=True, jc="center"))
 B.append(simple("", size=12))
@@ -242,7 +217,7 @@ B.append(para([], page_break=True))
 
 # ---- title / data / variables
 B.append(simple("Project Title: Descriptive analysis of Supermarket Sales data using R", size=16, bold=True, jc="center"))
-B.append(simple("Data used: supermarket_sales.csv - 1,000 supermarket transactions recorded from 1 January 2019 to 30 March 2019 across three branches (A/Yangon, B/Mandalay, C/Naypyitaw) and six product lines.", size=12))
+B.append(simple("Data used: supermarket_sales.csv - 1,000 supermarket transactions recorded from 1 January 2019 to 30 March 2019 across three branches (A/Yangon, B/Mandalay, C/Naypyitaw) and six product lines. Store opening hours are 10:00 to 20:00.", size=12))
 B.append(simple("Details of the data: Data contains 1000 observations and 17 variables as follows", size=12))
 variables = [
     "Invoice ID - invoice/computer-generated sales slip number (identifier, unique for every row)",
@@ -255,8 +230,8 @@ variables = [
     "Quantity - number of units purchased on the invoice",
     "Tax 5% - 5 percent tax on the cost of goods sold (equals gross income in every row)",
     "Total - invoice total, equal to 1.05 x Quantity x Unit price in every row",
-    "Date - date of purchase (text in the CSV, parsed as a date for grouping)",
-    "Time - time of purchase (text)",
+    "Date - date of purchase (text in the CSV, parsed as a date; Weekday derived for PS4)",
+    "Time - time of purchase as HH:MM text (Hour and part of day derived for PS4)",
     "Payment - payment method (Cash, Credit card, Ewallet)",
     "cogs - cost of goods sold, equal to Quantity x Unit price in every row",
     "gross margin percentage - constant at 4.761905 for every row (not a variable that explains differences)",
@@ -265,7 +240,7 @@ variables = [
 ]
 for i, v in enumerate(variables, 1):
     B.append(para([T(f"{i}. {v}", size=12)], jc="both"))
-B.append(simple("Six of the variables are categorical grouping fields (Branch, City, Customer type, Gender, Product line, Payment) and eight are numeric (Unit price, Quantity, Tax 5%, Total, cogs, gross margin percentage, gross income, Rating); Date and Time are stored as text and Invoice ID is an identifier. The financial columns Total, cogs, Tax 5% and gross income are linked by the invoice formula, so regressions that use them together reproduce accounting arithmetic rather than discovering independent drivers.", size=12))
+B.append(simple("Six variables are categorical grouping fields (Branch, City, Customer type, Gender, Product line, Payment) and eight are numeric; Date and Time are stored as text and Invoice ID is an identifier. The financial columns are linked by the invoice formula, so models using them together reproduce accounting arithmetic rather than discovering independent drivers.", size=12))
 B.append(simple("", size=12))
 
 RED = "FF0000"
@@ -276,11 +251,9 @@ for item in ["Problem Statement", "Statistical Analysis", "Data Visualization",
     B.append(simple(item, size=14, bold=True, color=RED))
 B.append(simple("", size=12))
 
-BLUE = "000000"  # problem-statement headings in black (no blue fonts)
-
 
 def ps_heading(text):
-    return simple(text, size=14, bold=True, color=BLUE)
+    return simple(text, size=14, bold=True, color="000000")
 
 
 def conclusion(text):
@@ -291,183 +264,162 @@ def code_label():
     return simple("Code:", size=12, bold=True)
 
 
-# ---- PS1
-B.append(ps_heading("Problem statement 1: Which product lines generate the greatest total revenue?"))
-B.append(simple("The data are grouped by product line and, for each line, the number of transactions, total revenue, mean and median invoice totals, mean quantity, mean gross income and mean rating are calculated with group_by() and summarise(). A one-way ANOVA tests whether mean invoice totals differ across the six product lines.", size=14))
+# ---- PS1: Product Line Performance & Satisfaction
+B.append(ps_heading("Problem statement 1: Product Line Performance & Satisfaction - How do average customer Rating scores and gross income vary across different Product line categories?"))
+B.append(simple("Transactions are grouped by product line with group_by() and summarise(); for each line the mean and standard deviation of Rating and the mean and total gross income are computed. One-way ANOVA tests whether mean ratings and mean gross incomes differ across the six lines.", size=14))
 B.append(table(
-    ["Product line", "Transactions", "Revenue", "Mean invoice total", "Median invoice total", "Mean rating"],
-    [[r["Product line"], r["Transactions"], money(r["Revenue"]), mean2(r["Mean_Total"]),
-      mean2(r["Median_Total"]), mean2(r["Mean_Rating"])] for r in ps1],
-    [2600, 1300, 1500, 1650, 1700, 1210]))
-B.append(simple(f"It shows that Food and beverages records the highest revenue ({money(ps1[0]['Revenue'])} from {ps1[0]['Transactions']} transactions) and Health and beauty the lowest ({money(ps1[-1]['Revenue'])} from {ps1[-1]['Transactions']} transactions). Revenue combines how many invoices a line has with how large they are, so the ranking alone does not measure profit or satisfaction. It can be visualised by a bar chart as follows.", size=14))
+    ["Product line", "Transactions", "Mean rating", "SD rating", "Mean gross income", "Total gross income"],
+    [[r["Product line"], r["Transactions"], mean2(r["Mean_Rating"]), mean2(r["SD_Rating"]),
+      mean2(r["Mean_Gross_Income"]), money(r["Total_Gross_Income"])] for r in ps1],
+    [2250, 1250, 1250, 1100, 1600, 1760]))
+t1r, t1g = t["PS1: product line ratings"], t["PS1: product line gross income"]
+B.append(simple(f"Food and beverages has the highest mean rating ({mean2(ps1[0]['Mean_Rating'])}) and Home and lifestyle the lowest ({mean2(ps1[-1]['Mean_Rating'])}); the spread is narrow (SD about 1.7 in every line). Total gross income is also highest for Food and beverages ({money(ps1[0]['Total_Gross_Income'])}) while mean gross income per invoice is highest for Home and lifestyle ({mean2('16.03033125')}). It can be visualised by bar charts as follows.", size=14))
 B.append(code_label())
 B.append(code_block([
     "ps1 <- sales_clean %>% group_by(`Product line`) %>%",
-    "  summarise(Transactions = n(), Revenue = sum(Total),",
-    "            Mean_Total = mean(Total), Mean_Rating = mean(Rating),",
-    "            .groups = \"drop\") %>%",
-    "  arrange(desc(Revenue))",
-    "ps1_anova <- aov(Total ~ `Product line`, data = sales_clean)",
-    "summary(ps1_anova)",
+    "  summarise(Transactions = n(), Mean_Rating = mean(Rating),",
+    "            SD_Rating = sd(Rating),",
+    "            Mean_Gross_Income = mean(`gross income`),",
+    "            Total_Gross_Income = sum(`gross income`),",
+    "            .groups = \"drop\")",
+    "summary(aov(Rating ~ `Product line`, data = sales_clean))",
+    "summary(aov(`gross income` ~ `Product line`, data = sales_clean))",
 ]))
 B.append(simple("Data Visualization:", size=14))
-pic, cap, _ = figure("fig1_revenue_by_product_line.png", "Figure 1. Total revenue by product line (sum of invoice Total).")
+pic, cap = figure("fig1_product_line_performance.png", "Figure 1. Mean rating (top) and total gross income (bottom) by product line.")
 B.append(pic); B.append(cap)
-B.append(conclusion(f"Food and beverages has the highest recorded revenue ({money(ps1[0]['Revenue'])}), followed by Sports and travel ({money(ps1[1]['Revenue'])}); Health and beauty is lowest ({money(ps1[-1]['Revenue'])}). The one-way ANOVA gives F = {stat3(t_ps1['Statistic'])}, p = {pval(t_ps1['P_value'])}, so there is no statistically significant evidence that mean invoice totals differ across product lines at the 5% level."))
+B.append(conclusion(f"Food and beverages leads on satisfaction ({mean2(ps1[0]['Mean_Rating'])}) and on total gross income ({money(ps1[0]['Total_Gross_Income'])}). The rating ANOVA (F = {stat3(t1r['Statistic'])}, p = {pval(t1r['P_value'])}) and the gross-income ANOVA (F = {stat3(t1g['Statistic'])}, p = {pval(t1g['P_value'])}) are both non-significant at 5%: the observed line differences are small relative to within-line variation."))
 
-# ---- PS2
-ps2s = sorted(ps2, key=lambda r: -float(r["Revenue"]))
-B.append(ps_heading("Problem statement 2: How do the branches compare in total revenue and average invoice total?"))
-B.append(simple("Branches A, B and C are compared with grouped totals, transaction counts and mean invoice totals. A one-way ANOVA on Total by Branch tests whether the branch means differ. (City matches Branch one-to-one: A-Yangon, B-Mandalay, C-Naypyitaw.)", size=14))
+# ---- PS2: Geographical & Branch Sales Comparison
+B.append(ps_heading("Problem statement 2: Geographical & Branch Sales Comparison - Is there a statistically significant difference in revenue (Total) and Customer type distribution among the three branches (Branch / City)?"))
+B.append(simple("Revenue, transaction counts and mean invoice totals are compared per Branch/City with grouped summaries and a one-way ANOVA on Total. The Member/Normal mix per branch is tabulated and tested with a chi-square test of independence.", size=14))
+ps2s = sorted(ps2r, key=lambda r: -float(r["Revenue"]))
 B.append(table(
     ["Branch", "City", "Transactions", "Revenue", "Mean invoice total"],
     [[r["Branch"], r["City"], r["Transactions"], money(r["Revenue"]), mean2(r["Mean_Total"])] for r in ps2s],
     [1100, 1900, 1600, 1900, 2060]))
-B.append(simple(f"Branch C (Naypyitaw) has the highest total revenue ({money(ps2s[0]['Revenue'])}) and the highest mean invoice total ({mean2(ps2s[0]['Mean_Total'])}); branches A and B are nearly tied at about {money(float(ps2s[1]['Revenue']))} and {money(float(ps2s[2]['Revenue']))}. It can be visualised by a bar chart as follows.", size=14))
+mix = {}
+for r in ps2c:
+    mix.setdefault(r["Branch"], {})[r["Customer_Type"]] = r["Transactions"]
+B.append(table(
+    ["Branch", "Member transactions", "Normal transactions"],
+    [[b, mix[b]["Member"], mix[b]["Normal"]] for b in ["A", "B", "C"]],
+    [2200, 2600, 2600]))
+t2a, t2c = t["PS2: branch revenue"], t["PS2: branch customer mix"]
+B.append(simple(f"Branch C (Naypyitaw) records the highest revenue ({money(ps2s[0]['Revenue'])}) and mean invoice ({mean2(ps2s[0]['Mean_Total'])}); A and B are nearly tied near {money(float(ps2s[1]['Revenue']))}. The Member/Normal split is close to 50/50 in every branch. It can be visualised as follows.", size=14))
 B.append(code_label())
 B.append(code_block([
-    "ps2 <- sales_clean %>% group_by(Branch, City) %>%",
+    "ps2_rev <- sales_clean %>% group_by(Branch, City) %>%",
     "  summarise(Transactions = n(), Revenue = sum(Total),",
     "            Mean_Total = mean(Total), .groups = \"drop\")",
-    "ps2_anova <- aov(Total ~ Branch, data = sales_clean)",
-    "summary(ps2_anova)",
+    "summary(aov(Total ~ Branch, data = sales_clean))",
+    "table(sales_clean$Branch, sales_clean$`Customer type`)",
+    "chisq.test(table(sales_clean$Branch, sales_clean$`Customer type`))",
+    "ggplot(fig2_counts, aes(x = Branch, y = Transactions,",
+    "       fill = `Customer type`)) + geom_col(position = \"dodge\")",
 ]))
 B.append(simple("Data Visualization:", size=14))
-pic, cap, _ = figure("fig2_revenue_by_branch.png", "Figure 2. Total revenue by branch (C = Naypyitaw, A = Yangon, B = Mandalay).")
+pic, cap = figure("fig2_branch_comparison.png", "Figure 2. Revenue (top) and Member/Normal mix (bottom) by branch.")
 B.append(pic); B.append(cap)
-B.append(conclusion(f"Branch C has the highest aggregate revenue, but the ANOVA (F = {stat3(t_ps2['Statistic'])}, p = {pval(t_ps2['P_value'])}) does not find a statistically significant difference in mean invoice totals across branches at the 5% level. Revenue totals also reflect the number and mix of transactions, not branch efficiency."))
+B.append(conclusion(f"Branch C leads on revenue, but the ANOVA (F = {stat3(t2a['Statistic'])}, p = {pval(t2a['P_value'])}) shows no significant mean-invoice difference, and the chi-square test (X-squared = {stat3(t2c['Statistic'])}, df = 2, p = {pval(t2c['P_value'])}) shows the customer-type mix does not depend on branch. Geography affects totals only through volume, not through a different customer mix."))
 
-# ---- PS3
-B.append(ps_heading("Problem statement 3: Do Member and Normal customers have different average invoice totals?"))
-B.append(simple("Average and median invoice totals are compared for the two customer types with group summaries and a Welch two-sample t-test (unequal variances not assumed). Filtered boxplots for Members and Normal customers are drawn in one panel with grid viewports, following the instructor sample-script pattern.", size=14))
+# ---- PS3: Payment Method Demographics
+B.append(ps_heading("Problem statement 3: Payment Method Demographics - Which Payment methods are preferred across different Gender and Customer type segments?"))
+B.append(simple("Payment counts are cross-tabulated with Gender and with Customer type (table()), segment shares are computed, and two chi-square tests of independence check whether preference depends on the segment.", size=14))
 B.append(table(
-    ["Customer type", "Transactions", "Revenue", "Mean invoice total", "Median invoice total", "SD"],
-    [[r["Customer type"], r["N"], money(r["Revenue"]), mean2(r["Mean_Total"]),
-      mean2(r["Median_Total"]), mean2(r["SD_Total"])] for r in sorted(ps3, key=lambda r: r["Customer type"], reverse=True)],
-    [1900, 1500, 1600, 1800, 1800, 1250]))
-m3 = {r["Customer type"]: r for r in ps3}
-B.append(simple(f"Members average {mean2(m3['Member']['Mean_Total'])} per transaction and Normal customers {mean2(m3['Normal']['Mean_Total'])}; medians are {mean2(m3['Member']['Median_Total'])} and {mean2(m3['Normal']['Median_Total'])}. The distributions overlap heavily, as the boxplots show.", size=14))
+    ["Payment", "Female (n)", "Female share %", "Male (n)", "Male share %"],
+    [["Cash", "178", "35.5", "166", "33.3"],
+     ["Credit card", "163", "32.5", "148", "29.7"],
+     ["Ewallet", "160", "31.9", "185", "37.1"]],
+    [2000, 1400, 1600, 1400, 1600]))
+B.append(table(
+    ["Payment", "Member (n)", "Member share %", "Normal (n)", "Normal share %"],
+    [["Cash", "168", "33.5", "176", "35.3"],
+     ["Credit card", "172", "34.3", "139", "27.9"],
+     ["Ewallet", "161", "32.1", "184", "36.9"]],
+    [2000, 1400, 1600, 1400, 1600]))
+t3g, t3c = t["PS3: payment by gender"], t["PS3: payment by customer type"]
+B.append(simple("Females use Cash most (35.5%) while males prefer Ewallet (37.1%); Members split almost evenly with Credit card marginally first (34.3%), while Normal customers favour Ewallet (36.9%) and use Credit card least (27.9%). It can be visualised as follows.", size=14))
 B.append(code_label())
 B.append(code_block([
-    "ps3 <- sales_clean %>% group_by(`Customer type`) %>%",
-    "  summarise(N = n(), Mean_Total = mean(Total),",
-    "            Median_Total = median(Total), .groups = \"drop\")",
-    "ps3_test <- t.test(Total ~ `Customer type`, data = sales_clean)",
-    "ps3_test",
-    "plot_member <- filter(sales_clean, `Customer type` == \"Member\") %>%",
-    "  ggplot(aes(y = Total)) + geom_boxplot()",
-    "plot_normal <- filter(sales_clean, `Customer type` == \"Normal\") %>%",
-    "  ggplot(aes(y = Total)) + geom_boxplot()",
+    "table(sales_clean$Payment, sales_clean$Gender)",
+    "table(sales_clean$Payment, sales_clean$`Customer type`)",
+    "chisq.test(table(sales_clean$Payment, sales_clean$Gender))",
+    "chisq.test(table(sales_clean$Payment, sales_clean$`Customer type`))",
+    "ggplot(Data, aes(x = Payment, fill = Gender)) +",
+    "  geom_bar(position = \"dodge\") + facet_wrap(~`Customer type`)",
 ]))
 B.append(simple("Data Visualization:", size=14))
-pic, cap, _ = figure("fig3_customer_type_boxplot.png", "Figure 3. Invoice total by customer type (box = interquartile range, line = median).")
+pic, cap = figure("fig3_payment_demographics.png", "Figure 3. Payment method by gender, faceted by customer type (dodged bars).")
 B.append(pic); B.append(cap)
-B.append(conclusion(f"The Welch t-test gives t = {stat3(t_ps3['Statistic'])}, df = {float(t_ps3['DF']):.1f}, p = {pval(t_ps3['P_value'])} (95% CI for the difference: -20.86 to 40.19), so this sample provides no statistically significant evidence of a mean difference at the 5% level. This does not prove the groups are identical."))
+B.append(conclusion(f"Descriptively, Cash leads among females and Ewallet among males and Normal customers, but neither chi-square test is significant at 5% (gender: X-squared = {stat3(t3g['Statistic'])}, p = {pval(t3g['P_value'])}; customer type: X-squared = {stat3(t3c['Statistic'])}, p = {pval(t3c['P_value'])}). Payment preference does not demonstrably depend on these segments in this sample."))
 
-# ---- PS4
-ps4s = sorted(ps4, key=lambda r: -int(r["N"]))
-B.append(ps_heading("Problem statement 4: Which payment methods are most used, and do mean invoice totals differ?"))
-B.append(simple("Transaction counts, revenue and mean invoice totals are compared for Cash, Credit card and Ewallet with grouped summaries and a one-way ANOVA on Total by Payment.", size=14))
+# ---- PS4: Peak Shopping Hours & Days
+B.append(ps_heading("Problem statement 4: Peak Shopping Hours & Days - What time of day (Time) and day of the week (Date) experience the highest customer volume and order totals?"))
+B.append(simple("Hour is extracted from Time text and Weekday from Date; transactions, revenue and mean totals are summarised per hour, per part of day and per weekday. Chi-square goodness-of-fit tests check whether volume is uniform across hours and weekdays.", size=14))
 B.append(table(
-    ["Payment method", "Transactions", "Revenue", "Mean invoice total"],
-    [[r["Payment"], r["N"], money(r["Revenue"]), mean2(r["Mean_Total"])] for r in ps4s],
-    [2200, 1700, 1900, 2200]))
-B.append(simple(f"Ewallet records {ps4s[0]['N']} transactions and Cash {ps4s[1]['N']}, almost equally frequent; Credit card is used least ({ps4s[2]['N']}). Mean invoice totals are close ({mean2(ps4s[1]['Mean_Total'])}, {mean2(ps4s[2]['Mean_Total'])} and {mean2(ps4s[0]['Mean_Total'])} respectively). It can be visualised by a bar chart as follows.", size=14))
-B.append(code_label())
-B.append(code_block([
-    "ps4 <- sales_clean %>% group_by(Payment) %>%",
-    "  summarise(N = n(), Revenue = sum(Total),",
-    "            Mean_Total = mean(Total), .groups = \"drop\")",
-    "ps4_anova <- aov(Total ~ Payment, data = sales_clean)",
-    "summary(ps4_anova)",
-    "ggplot(sales_clean, aes(x = Payment, fill = Payment)) + geom_bar()",
-]))
-B.append(simple("Data Visualization:", size=14))
-pic, cap, _ = figure("fig4_payment_methods.png", "Figure 4. Number of transactions by payment method.")
-B.append(pic); B.append(cap)
-B.append(conclusion(f"Ewallet and Cash dominate usage in this sample. The ANOVA (F = {stat3(t_ps4['Statistic'])}, p = {pval(t_ps4['P_value'])}) gives no evidence that average invoice totals differ by payment method at the 5% level."))
-
-# ---- PS5
-B.append(ps_heading("Problem statement 5: How strongly is quantity associated with invoice total?"))
-B.append(simple("The linear association between quantity purchased and invoice total is measured with a scatterplot and Pearson correlation (cor.test), with unit price kept alongside quantity in a linear model as a syllabus exercise. Note that Total = 1.05 x Quantity x Unit price in every row, so these models reproduce the invoice formula rather than discovering a new driver.", size=14))
+    ["Hour", "Transactions", "Revenue", "Mean invoice total"],
+    [[r["Hour"], r["Transactions"], money(r["Revenue"]), mean2(r["Mean_Total"])] for r in ps4h],
+    [1400, 1700, 1900, 2110]))
 B.append(table(
-    ["Measure", "Value"],
-    [["Pearson correlation r (Quantity, Total)", stat3(t_ps5["Statistic"])],
-     ["Sample size n", "1000"],
-     ["95% confidence interval", "0.673 to 0.735"],
-     ["p-value", pval(t_ps5["P_value"])],
-     ["Unit-price correlation r (Unit price, Total)", "0.634"],
-     ["Regression Total ~ Quantity + Unit price: adjusted R-squared", "0.890"]],
-    [5000, 3210]))
-B.append(code_label())
-B.append(code_block([
-    "ps5_cor <- cor.test(sales_clean$Quantity, sales_clean$Total,",
-    "                    method = \"pearson\")",
-    "ps5_cor",
-    "ps5_model <- lm(Total ~ Quantity + `Unit price`, data = sales_clean)",
-    "summary(ps5_model)",
-    "ggplot(sales_clean, aes(x = Quantity, y = Total)) +",
-    "  geom_point() + geom_smooth(method = \"lm\")",
-]))
-B.append(simple("Data Visualization:", size=14))
-pic, cap, _ = figure("fig5_quantity_vs_total.png", "Figure 5. Quantity purchased versus invoice total, with fitted line (Pearson r = 0.706, n = 1000).")
-B.append(pic); B.append(cap)
-B.append(conclusion("Quantity and invoice total have a strong positive Pearson correlation (r = 0.706, 95% CI 0.673 to 0.735, p < 0.001). Invoices with more items tend to be larger, but unit prices vary widely and Total is computed from quantity and unit price, so this is an expected association and not causal evidence."))
-
-# ---- PS6
-B.append(ps_heading("Problem statement 6: What does the customer-rating distribution show, and is rating related to invoice total?"))
-B.append(simple("Customer ratings are described with mean, median, standard deviation, range and a histogram, and their linear association with invoice total is tested with Pearson correlation.", size=14))
-B.append(table(
-    ["Rating summary", "Value"],
-    [["Transactions rated (n)", "1000"],
-     ["Mean rating", mean2(ps6["Mean_Rating"])],
-     ["Median rating", mean2(ps6["Median_Rating"])],
-     ["Standard deviation", stat3(ps6["SD_Rating"])],
-     ["Minimum - Maximum", f"{mean2(ps6['Min_Rating'])} - {mean2(ps6['Max_Rating'])}"],
-     ["Correlation r (Rating, Total)", stat3(t_ps6["Statistic"])],
-     ["p-value", pval(t_ps6["P_value"])]],
-    [5000, 3210]))
-B.append(code_label())
-B.append(code_block([
-    "mean(sales_clean$Rating); median(sales_clean$Rating)",
-    "sd(sales_clean$Rating); min(sales_clean$Rating); max(sales_clean$Rating)",
-    "ps6_cor <- cor.test(sales_clean$Rating, sales_clean$Total)",
-    "ps6_cor",
-    "ggplot(sales_clean, aes(x = Rating)) + geom_histogram(binwidth = 0.5)",
-]))
-B.append(simple("Data Visualization:", size=14))
-pic, cap, _ = figure("fig6_rating_distribution.png", "Figure 6. Distribution of customer ratings (dashed line = mean).")
-B.append(pic); B.append(cap)
-B.append(conclusion(f"Ratings span 4.0 to 10.0 with mean {mean2(ps6['Mean_Rating'])} and median 7.0. Their correlation with invoice total is very weak (r = {stat3(t_ps6['Statistic'])}, p = {pval(t_ps6['P_value'])}), so higher-value invoices are not demonstrably associated with higher ratings in this sample."))
-
-# ---- PS7
-B.append(ps_heading("Problem statement 7: How does revenue vary across months and weekdays?"))
-B.append(simple("Date text is converted with as.Date(), Month and Weekday are derived, and revenue, transaction counts and means are summarised per month and per weekday. The data cover only 1 January to 30 March 2019, so the results describe this period and do not establish a long-term trend.", size=14))
-B.append(table(
-    ["Month", "Transactions", "Revenue", "Mean invoice total"],
-    [[r["Month"], r["Transactions"], money(r["Revenue"]), mean2(r["Mean_Total"])] for r in ps7m],
-    [2200, 1900, 2000, 2110]))
+    ["Part of day", "Transactions", "Revenue", "Mean invoice total"],
+    [[r["Part_of_day"], r["Transactions"], money(r["Revenue"]), mean2(r["Mean_Total"])] for r in ps4p],
+    [2300, 1700, 1900, 2110]))
 B.append(table(
     ["Weekday", "Transactions", "Revenue", "Mean invoice total"],
-    [[r["Weekday"], r["Transactions"], money(r["Revenue"]), mean2(r["Mean_Total"])] for r in ps7d],
-    [2200, 1900, 2000, 2110]))
-B.append(simple(f"January has the highest revenue ({money(ps7m[0]['Revenue'])}; {ps7m[0]['Transactions']} transactions), February the lowest ({money(ps7m[1]['Revenue'])}; {ps7m[1]['Transactions']} transactions) and March recovers ({money(ps7m[2]['Revenue'])}). Among weekdays, Saturday records the highest revenue ({money(ps7d[0]['Revenue'])}) and the highest mean invoice total ({mean2(ps7d[0]['Mean_Total'])}). It can be visualised as follows.", size=14))
+    [[r["Weekday"], r["Transactions"], money(r["Revenue"]), mean2(r["Mean_Total"])] for r in ps4d],
+    [2000, 1700, 1900, 2110]))
+t4h, t4d = t["PS4: hourly volume"], t["PS4: weekday volume"]
+B.append(simple(f"Hour 19:00 is busiest ({ps4h[0]['Transactions']} transactions, {money(ps4h[0]['Revenue'])} revenue); the afternoon block (13-16) carries the most traffic overall ({ps4p[0]['Transactions']} transactions). Saturday is the strongest day ({ps4d[0]['Transactions']} transactions, {money(ps4d[0]['Revenue'])}), Monday the weakest ({ps4d[-1]['Transactions']}). It can be visualised as follows.", size=14))
 B.append(code_label())
 B.append(code_block([
-    "sales_clean$Month <- format(sales_clean$Date, \"%Y-%m\")",
+    "sales_clean$Hour <- as.integer(substr(sales_clean$Time, 1, 2))",
     "sales_clean$Weekday <- weekdays(sales_clean$Date)",
-    "ps7_month <- sales_clean %>% group_by(Month) %>%",
-    "  summarise(N = n(), Revenue = sum(Total),",
+    "ps4_hour <- sales_clean %>% group_by(Hour) %>%",
+    "  summarise(Transactions = n(), Revenue = sum(Total),",
     "            Mean_Total = mean(Total), .groups = \"drop\")",
-    "ggplot(ps7_month, aes(x = Month, y = Revenue, group = 1)) +",
-    "  geom_col() + geom_line() + geom_point()",
+    "chisq.test(table(sales_clean$Hour))   # uniform hours?",
+    "chisq.test(table(sales_clean$Weekday)) # uniform weekdays?",
 ]))
 B.append(simple("Data Visualization:", size=14))
-pic, cap, _ = figure("fig7_monthly_revenue.png", "Figure 7. Revenue by month over the supplied three-month period.")
+pic, cap = figure("fig4_peak_hours_days.png", "Figure 4. Transactions by hour (top) and revenue by weekday (bottom).")
 B.append(pic); B.append(cap)
-B.append(conclusion("January leads on both revenue and transaction count, February dips, and March recovers. Saturday is the strongest weekday descriptively. With only three observed months, these are sample descriptions, not seasonal findings, and no causal explanation can be drawn from the CSV alone."))
+B.append(conclusion(f"Evenings (especially 19:00) and Saturdays draw the most shoppers and money in this sample. The uniformity tests do not reject even spread at 5% (hours: X-squared = {stat3(t4h['Statistic'])}, p = {pval(t4h['P_value'])}; weekdays: X-squared = {stat3(t4d['Statistic'])}, p = {pval(t4d['P_value'])}), so the peaks are descriptive patterns, not proven systematic differences."))
 
-# ---- correlation & regression
+# ---- PS5: Profitability & Pricing Elasticity
+B.append(ps_heading("Problem statement 5: Profitability & Pricing Elasticity - How does product Unit price impact purchase Quantity and total gross income generated?"))
+B.append(simple("Pearson correlation (cor.test) measures the linear links of Unit price with Quantity and with gross income; a scatterplot shows the price-quantity cloud; and product lines are ranked by total gross income with their mean prices and quantities. A simple regression line is fitted as a syllabus exercise with the invoice-formula caution.", size=14))
+B.append(table(
+    ["Product line", "Mean unit price", "Mean quantity", "Total gross income", "Total revenue"],
+    [[r["Product line"], mean2(r["Mean_Unit_Price"]), mean2(r["Mean_Quantity"]),
+      money(r["Total_Gross_Income"]), money(r["Total_Revenue"])] for r in ps5p],
+    [2250, 1400, 1300, 1750, 1710]))
+t5q, t5g = t["PS5: price vs quantity"], t["PS5: price vs gross income"]
+B.append(table(
+    ["Measure", "Value"],
+    [["Pearson r (Unit price, Quantity)", stat3(t5q["Statistic"])],
+     ["p-value", pval(t5q["P_value"])],
+     ["Pearson r (Unit price, gross income)", stat3(t5g["Statistic"])],
+     ["p-value", pval(t5g["P_value"])],
+     ["Regression gross income ~ Unit price: adjusted R-squared", "0.401"]],
+    [5000, 3210]))
+B.append(simple(f"Unit price and quantity have essentially no linear relationship (r = {stat3(t5q['Statistic'])}, p = {pval(t5q['P_value'])}): expensive items are not bought in systematically smaller amounts here, so no pricing elasticity is visible. Gross income rises with unit price (r = {stat3(t5g['Statistic'])}), but gross income equals 5% of Quantity x Unit price by construction, so this is invoice arithmetic. Food and beverages generates the most total gross income ({money(ps5p[0]['Total_Gross_Income'])}).", size=14))
+B.append(code_label())
+B.append(code_block([
+    "ps5_qty <- cor.test(sales_clean$`Unit price`, sales_clean$Quantity)",
+    "ps5_qty   # r near 0: no linear price-quantity link",
+    "ps5_gross <- cor.test(sales_clean$`Unit price`,",
+    "                      sales_clean$`gross income`)",
+    "ggplot(sales_clean, aes(x = `Unit price`, y = Quantity,",
+    "       color = `Product line`)) + geom_point()",
+    "lm(`gross income` ~ `Unit price`, data = sales_clean)",
+]))
+B.append(simple("Data Visualization:", size=14))
+pic, cap = figure("fig5_price_vs_quantity.png", "Figure 5. Unit price versus quantity by product line (dashed = fitted line, r = 0.011).")
+B.append(pic); B.append(cap)
+B.append(conclusion("There is no demonstrable pricing elasticity in this sample: quantity does not fall as unit price rises. Profitability ranking follows revenue ranking because the margin rate is constant, with Food and beverages on top. Price can therefore not be used from these data to predict how much customers will buy."))
+
+# ---- Correlation, Regression Analysis.
 B.append(ps_heading("Correlation, Regression Analysis."))
 B.append(simple("Following the Flow of the activity, the correlation and regression exercises are summarised here with their actual fitted values. Unit III fits gross income on cogs (simple linear regression); Unit IV fits invoice total on unit price, quantity, branch and payment (multiple linear regression) with residual diagnostics, confidence intervals and predictions.", size=14))
 B.append(table(
@@ -497,14 +449,14 @@ B.append(conclusion("The simple regression restates the 5% invoice rule and the 
 
 # ---- overall conclusion
 B.append(ps_heading("Conclusion:"))
-B.append(simple(f"Total recorded revenue across the 1,000 supplied invoices is {money(rev_total)} (mean invoice total {mean2(rev_total / 1000)}). Food and beverages has the highest product-line revenue, Branch C (Naypyitaw) the highest branch revenue, and quantity is positively associated with invoice total (r = 0.706). Customer ratings centre near 7 and show almost no linear association with invoice total (r = -0.036, p = 0.250). Mean invoice-total differences by branch, product line, payment method and customer type are all statistically non-significant at the 5% level. The project demonstrates Unit I data handling, Unit II wrangling and visualisation, Unit III correlation and simple regression, and Unit IV multiple regression with diagnostics, all computed from the supplied CSV with reproducible R scripts.", size=14))
-B.append(simple("Limitations: the data are observational transactions from three branches over three months; inventory, costs, promotions and customer demographics are absent; Total, cogs, Tax 5% and gross income are algebraically linked and gross margin percentage is constant, so models using them are mechanical; Branch and City duplicate each other; and non-significant tests do not prove equality. Future work could collect a longer period, add cost and promotion fields, and model product mix with the multiplicative invoice structure made explicit.", size=14))
+B.append(simple(f"Total recorded revenue across the 1,000 supplied invoices is {money(rev_total)}. Food and beverages earns the highest satisfaction ({mean2(ps1[0]['Mean_Rating'])}) and the most total gross income ({money(ps1[0]['Total_Gross_Income'])}), though line differences are not statistically significant. Branch C (Naypyitaw) leads revenue ({money(ps2s[0]['Revenue'])}) with the same ~50/50 Member/Normal mix as the other branches. Payment preference leans to Cash among females and Ewallet among males and Normal customers, without significant segment dependence. Evenings (19:00) and Saturdays are the busiest descriptively. Unit price shows no linear link to quantity purchased (r = 0.011), so no pricing elasticity is demonstrable. The project demonstrates Unit I data handling, Unit II wrangling and visualisation, Unit III correlation and simple regression, and Unit IV multiple regression with diagnostics, all computed from the supplied CSV with reproducible R scripts.", size=14))
+B.append(simple("Limitations: the data are observational transactions from three branches over three months (hours 10:00-20:00); inventory, costs, promotions and customer demographics are absent; Total, cogs, Tax 5% and gross income are algebraically linked and gross margin percentage is constant, so models using them are mechanical; Branch and City duplicate each other; and non-significant tests do not prove equality. Future work could collect a longer period, add cost and promotion fields, and study price effects with real price variation over time.", size=14))
 B.append(simple("", size=12))
 
 # ---- appendix
 B.append(ps_heading("Appendix A. R project execution."))
-B.append(simple("Open R_Unit1_to_Unit4_Project.Rproj in RStudio and run main.R from the project root (or run Rscript main.R). requirements.R checks dplyr and ggplot2 (required) and tidyr (optional, one toy demo). The dataset loads from data/supermarket_sales.csv, falling back to the documented Windows practical path if needed. Scripts execute in order: unit1, course_concept_demos, unit2, unit3, unit4, data_analysis, problem_statements, report_figures, verify_results. Tables land in outputs/reports/, plots in outputs/plots/, the seven report figures in report/figures/. verify_results.R recomputes all 20 headline numbers from the raw CSV and stops on any mismatch (all matched in the submitted run, R 4.6.1).", size=12))
-B.append(simple("Key files: main.R, requirements.R, scripts/unit1.R-unit4.R, scripts/problem_statements.R, scripts/data_analysis.R, scripts/report_figures.R, scripts/verify_results.R, functions/helper_functions.R, data/supermarket_sales.csv, PLAN.md, README.md, UNIT_MAPPING.md, oral_exam/viva_questions_and_functions.md.", size=12))
+B.append(simple("Open R_Unit1_to_Unit4_Project.Rproj in RStudio and run main.R from the project root (or run Rscript main.R). requirements.R checks dplyr and ggplot2 (required) and tidyr (optional, one toy demo). The dataset loads from data/supermarket_sales.csv, falling back to the documented Windows practical path if needed. Scripts execute in order: unit1, course_concept_demos, unit2, unit3, unit4, problem_statements (PS1-PS5), report_figures, verify_results. Tables land in outputs/reports/, plots in outputs/plots/, the five report figures in report/figures/. verify_results.R recomputes all 19 headline numbers from the raw CSV and stops on any mismatch (all matched in the submitted run, R 4.6.1).", size=12))
+B.append(simple("Key files: main.R, requirements.R, scripts/unit1.R-unit4.R, scripts/problem_statements.R, scripts/report_figures.R, scripts/verify_results.R, functions/helper_functions.R, data/supermarket_sales.csv, PLAN.md, README.md, UNIT_MAPPING.md, oral_exam/viva_questions_and_functions.md.", size=12))
 B.append(ps_heading("References."))
 B.append(simple("1. Supplied dataset: supermarket_sales.csv (1,000 rows, 17 columns; source publisher not included with the file). 2. Supplied course materials: SDAUR.zip (Unit I command script, dplyr, descriptive statistics, plotting practicals, linear and multiple regression notes, missing-value, join, type-change and tidyr materials) and the instructor sample script sample project_FA2.R. 3. R Core Team. R: A Language and Environment for Statistical Computing. https://www.r-project.org/.", size=12))
 B.append(simple("Team: Aditya Kuwar (125B1B097), Jeevan Sagale (125B1B080), Vedant Hire (125B1B099), Tanay Daware (125B1B098). [Still to complete before submission: branch, submission date, signatures.]", size=12, bold=True))
@@ -520,7 +472,7 @@ styles = f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
 <w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="24"/><w:szCs w:val="24"/><w:lang w:val="en-IN"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="160" w:line="259" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>
 <w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:after="160" w:line="259" w:lineRule="auto"/></w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:spacing w:before="240" w:after="120"/></w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:b/><w:sz w:val="32"/><w:color w:val="1F4E79"/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:spacing w:before="240" w:after="120"/></w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:b/><w:sz w:val="32"/><w:color w:val="000000"/></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Code"><w:name w:val="Code"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:ind w:left="360"/></w:pPr><w:rPr><w:rFonts w:ascii="Consolas" w:hAnsi="Consolas"/><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr></w:style>
 </w:styles>'''
 

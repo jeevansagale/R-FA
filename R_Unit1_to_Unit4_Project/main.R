@@ -6,7 +6,7 @@
 cat("\n============================================================\n")
 cat("R PROGRAMMING PROJECT: UNIT 1 TO UNIT 4\n")
 cat("Dataset: Supermarket Sales\n")
-cat("Execution order: Unit 1 -> Unit 2 -> Unit 3 -> Unit 4 -> Integrated Analysis\n")
+cat("Execution order: Unit 1 -> Unit 2 -> Unit 3 -> Unit 4 -> Problem Statements\n")
 cat("============================================================\n")
 
 # ---------------------------------------------------------------------------
@@ -37,7 +37,6 @@ required_paths <- c(
   "scripts/unit2.R",
   "scripts/unit3.R",
   "scripts/unit4.R",
-  "scripts/data_analysis.R",
   "scripts/problem_statements.R",
   "scripts/report_figures.R",
   "scripts/verify_results.R",
@@ -110,7 +109,6 @@ script_sequence <- c(
   "scripts/unit2.R",
   "scripts/unit3.R",
   "scripts/unit4.R",
-  "scripts/data_analysis.R",
   "scripts/problem_statements.R",
   "scripts/report_figures.R",
   "scripts/verify_results.R"

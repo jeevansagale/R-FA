@@ -1,0 +1,6 @@
+
+	Chi-squared test for given probabilities
+
+data:  table(sales_clean$Weekday)
+X-squared = 7.916, df = 6, p-value = 0.2443
+

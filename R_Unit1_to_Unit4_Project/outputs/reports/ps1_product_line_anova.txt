@@ -1,3 +1,0 @@
-                Df   Sum Sq Mean Sq F value Pr(>F)
-`Product line`   5   102506   20501   0.338   0.89
-Residuals      994 60296633   60661               

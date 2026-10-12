@@ -21,8 +21,8 @@ Plan status: executed. Generated results live in `outputs/`, the final report is
 | `scripts/unit2.R` | Unit II: cleaning, dplyr pipeline, descriptive statistics, skewness/kurtosis, 7 plots, cleaned CSV | Working |
 | `scripts/unit3.R` | Unit III: correlation, simple linear regression, prediction, residuals | Working |
 | `scripts/unit4.R` | Unit IV: correlation matrix, multiple regression, diagnostics, prediction | Working (minor `row.names` issue) |
-| `scripts/data_analysis.R` | Integrated summaries, ANOVA, plots | Working |
-| `scripts/problem_statements.R` | Seven problem statements (PS1–PS7) | Runs, but no console-visible inferences and one `cat` bug |
+| ~~`scripts/data_analysis.R`~~ | Integrated summaries (old brief) | **Removed** — old-PS script deleted, useful guards folded into `problem_statements.R` (PS0) |
+| `scripts/problem_statements.R` | Five problem statements (PS1–PS5, revised brief) | Rewritten; old seven-PS version removed |
 | `data/supermarket_sales.csv` | Supplied dataset (1 000 × 17) | Untouched; verified below |
 | `outputs/reports/*.csv`, `outputs/plots/*.png` | Mixed set of tables/plots | **Stale — not reproducible from current code** |
 | `report/final_project_report.docx/.pdf` | Earlier provisional report (generic structure) | Kept for reference; superseded by the sample-format report |
@@ -91,7 +91,7 @@ R_Unit1_to_Unit4_Project/
 ├── data/supermarket_sales.csv   # untouched source
 ├── functions/helper_functions.R
 ├── scripts/unit1.R, course_concept_demos.R, unit2.R, unit3.R, unit4.R,
-│          data_analysis.R, problem_statements.R, verify_results.R (new)
+│          problem_statements.R (PS1–PS5, revised brief), verify_results.R
 ├── outputs/reports/…            # regenerated from the current code only
 ├── outputs/plots/…              # regenerated; each figure used in the report
 ├── report/Supermarket_Sales_FA2_Report.docx / .pdf   # final report (sample format)
@@ -113,7 +113,7 @@ provisional format); the final submission report is the new sample-format file.
 * **P1-4** Fix `cat()` newline; add printed result tables and one-line inferences for each PS.
 * **P1-5** Add `scripts/verify_results.R`: recomputes the report's key numbers (totals, means, correlations, test statistics, p-values, R², accounting identities) from the raw CSV in a fresh session and writes `outputs/reports/verification_results.csv`, so the report numbers are traceable and independently re-computed.
 * **P1-6** Extend `scripts/problem_statements.R` PS3 with the instructor's filtered-boxplot + `grid::viewport` pattern (Member vs Normal invoice totals in a 2-row figure).
-* **P1-7** Add `scripts/report_figures.R`: produces the exact seven report figures (`report/figures/fig1…fig7.png`) at print resolution so the report embeds only figures that the code regenerates.
+* **P1-7** ~~seven report figures (`fig1…fig7.png`)~~ — superseded by the revised brief: `report_figures.R` now produces `fig1…fig5.png` for PS1–PS5.
 * **P1-8** Update README, `UNIT_MAPPING.md`, `ASSESSMENT_CHECKLIST.md`, viva notes with the executed run evidence (log in `outputs/reports/run_log.txt`).
 
 ---
@@ -122,13 +122,11 @@ provisional format); the final submission report is the new sample-format file.
 
 | # | Question | Variables | R operations | Statistics | Graph | Inference (computed in the run) |
 |---|---|---|---|---|---|---|
-| PS1 | Which product lines generate the greatest total revenue? | `Product line`, `Total`, `Rating`, `Quantity` | `group_by()`, `summarise()`, `arrange()` | totals, means, counts | `fig1_revenue_by_product_line.png` | Food and beverages highest, Health and beauty lowest; revenue = count × size, not profit |
-| PS2 | How do branches compare in revenue and average invoice? | `Branch`, `City`, `Total` | `group_by()`, `summarise()`, `aov()` | grouped summaries, one-way ANOVA | `fig2_revenue_by_branch.png` | Branch C highest revenue, but branch mean differences are not significant (ANOVA) |
-| PS3 | Do Member and Normal customers spend differently? | `Customer type`, `Total` | `group_by()`, `filter()`, `t.test()` | grouped summaries, Welch two-sample t-test; filtered boxplots via `grid::viewport` | `fig3_customer_type_boxplot_grid.png` | Member mean higher, difference not significant at α = 0.05 |
-| PS4 | Which payment methods dominate, and do totals differ? | `Payment`, `Total` | `group_by()`, `summarise()`, `aov()` | counts, revenue, means, one-way ANOVA | `fig4_payment_methods.png` | Cash/Ewallet near-equal counts; no significant mean difference |
-| PS5 | How strongly is quantity associated with invoice total? | `Quantity`, `Unit price`, `Total` | `cor.test()`, `lm()`, `summary()` | Pearson r + p-value, regression coefficients, R² | `fig5_quantity_vs_total.png` | Strong positive r; partly mechanical because `Total` is built from the transaction components |
-| PS6 | What does the rating distribution show, and is it related to `Total`? | `Rating`, `Total` | `mean/median/sd`, `cor.test()`, `geom_histogram` | descriptive stats, Pearson r + p-value | `fig6_rating_distribution.png` | Ratings centred near 7; no significant linear association with `Total` |
-| PS7 | How does revenue vary across months and weekdays? | `Date`, `Total`, derived `Month`, `Weekday` | `as.Date()`, `format()`, `weekdays()`, `group_by()` | grouped totals/means | `fig7_monthly_revenue.png` | January highest, February lowest, March recovers; 3-month window only |
+| PS1 | Product Line Performance & Satisfaction: how do mean Rating and gross income vary by Product line? | `Product line`, `Rating`, `gross income` | `group_by()`, `summarise()`, `aov()` | group means/SDs, two one-way ANOVAs | `fig1_product_line_performance.png` (grid: rating + gross income) | Food & beverages top rating (7.11) and gross income (2,673.56); both ANOVAs ns (p = 0.746 / 0.890) |
+| PS2 | Geographical & Branch Comparison: revenue and customer-type mix across Branch/City? | `Branch`, `City`, `Total`, `Customer type` | `group_by()`, `table()`, `aov()`, `chisq.test()` | revenue/means, ANOVA, chi-square independence | `fig2_branch_comparison.png` (grid: revenue + dodge mix) | C leads revenue (110,568.71); ANOVA ns (p = 0.413); mix independent (p = 0.811) |
+| PS3 | Payment Method Demographics: preferences across Gender × Customer type? | `Payment`, `Gender`, `Customer type` | `table()`, shares, `chisq.test()` ×2 | cross-tabs, segment %, independence tests | `fig3_payment_demographics.png` (faceted dodge) | Cash leads females (35.5%), Ewallet males (37.1%); both ns (p = 0.229 / 0.074) |
+| PS4 | Peak Shopping Hours & Days: volume and totals by Time and weekday? | `Time`→Hour, `Date`→Weekday, `Total` | `substr()`, `weekdays()`, `group_by()`, `chisq.test()` GOF ×2 | hourly/part/day summaries, uniformity tests | `fig4_peak_hours_days.png` (grid: hours + weekdays) | 19:00 (113) and Saturday (164) peak; uniformity ns (p = 0.050 / 0.244) |
+| PS5 | Profitability & Pricing Elasticity: Unit price vs Quantity and gross income? | `Unit price`, `Quantity`, `gross income`, `Product line` | `cor.test()` ×2, `lm()`, `group_by()` | Pearson r, regression exercise | `fig5_price_vs_quantity.png` (scatter by line) | price–qty r = 0.011 ns (no elasticity); price–gross r = 0.634 (arithmetic) |
 
 Course-unit coverage (mapped to code): Unit I → `scripts/unit1.R`; Unit II → `scripts/unit2.R`,
 `scripts/problem_statements.R`; Unit III → `scripts/unit3.R`; Unit IV → `scripts/unit4.R`
@@ -151,7 +149,7 @@ Course-unit coverage (mapped to code): Unit I → `scripts/unit1.R`; Unit II →
 
 ## 6. Report and deliverable generation steps
 
-1. Run `Rscript scripts/report_figures.R` → `report/figures/fig1…fig7.png`.
+1. Run `Rscript scripts/report_figures.R` → `report/figures/fig1…fig5.png`.
 2. Build `report/Supermarket_Sales_FA2_Report.docx` from the sample template's structure
    (cover page → project title/data/variable details → red "Flow" list → per-PS sections with
    table, R code, figure, conclusion → correlation/regression analysis → conclusion),

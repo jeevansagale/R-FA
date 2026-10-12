@@ -2,7 +2,7 @@
 ============================================================
 R PROGRAMMING PROJECT: UNIT 1 TO UNIT 4
 Dataset: Supermarket Sales
-Execution order: Unit 1 -> Unit 2 -> Unit 3 -> Unit 4 -> Integrated Analysis
+Execution order: Unit 1 -> Unit 2 -> Unit 3 -> Unit 4 -> Problem Statements
 ============================================================
 
 Project root: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project 
@@ -551,219 +551,250 @@ Residual standard error of the additive model: 81.5573  on 1000 observations.
 [UNIT 4] Completed.
 
 ------------------------------------------------------------
-Running: scripts/data_analysis.R 
-------------------------------------------------------------
-
-[INTEGRATED PROJECT] Starting combined supermarket analysis
-  Rows Columns Missing_Cells Duplicate_Rows Distinct_Invoices
-1 1000      17             0              0              1000
-# A tibble: 6 × 7
-  `Product line`       Transactions Total_Revenue Average_Invoice Median_Invoice
-  <chr>                       <int>         <dbl>           <dbl>          <dbl>
-1 Food and beverages            174        56145.            323.           252.
-2 Sports and travel             166        55123.            332.           271.
-3 Electronic accessor…          170        54338.            320.           241.
-4 Fashion accessories           178        54306.            305.           212.
-5 Home and lifestyle            160        53862.            337.           258.
-6 Health and beauty             152        49194.            324.           272.
-# ℹ 2 more variables: Average_Gross_Income <dbl>, Average_Rating <dbl>
-Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/integrated_revenue_by_product_line.png
-Correlation between Quantity and Total: 0.7055102 
-Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/integrated_quantity_vs_total.png
-             Df   Sum Sq Mean Sq F value Pr(>F)
-Branch        2   106988   53494   0.885  0.413
-Residuals   997 60292151   60474               
-Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/integrated_total_by_branch.png
-[INTEGRATED PROJECT] Completed.
-
-------------------------------------------------------------
 Running: scripts/problem_statements.R 
 ------------------------------------------------------------
 
-[PROBLEM STATEMENTS] Running seven distinct questions
+[PROBLEM STATEMENTS] Running five project questions
 
 ------------------------------------------------------------
-PS1: Revenue, volume and rating by product line 
+PS0: Data-quality guard 
 ------------------------------------------------------------
-# A tibble: 6 × 8
-  `Product line`      Transactions Revenue Mean_Total Median_Total Mean_Quantity
-  <fct>                      <int>   <dbl>      <dbl>        <dbl>         <dbl>
-1 Food and beverages           174  56145.       323.         252.          5.47
-2 Sports and travel            166  55123.       332.         271.          5.54
-3 Electronic accesso…          170  54338.       320.         241.          5.71
-4 Fashion accessories          178  54306.       305.         212.          5.07
-5 Home and lifestyle           160  53862.       337.         258.          5.69
-6 Health and beauty            152  49194.       324.         272.          5.62
-# ℹ 2 more variables: Mean_Gross_Income <dbl>, Mean_Rating <dbl>
-One-way ANOVA of invoice total by product line:
-                Df   Sum Sq Mean Sq F value Pr(>F)
-`Product line`   5   102506   20501   0.338   0.89
-Residuals      994 60296633   60661               
+ Rows Columns Missing_Cells Duplicate_Rows Distinct_Invoices
+ 1000      17             0              0              1000
 
 ------------------------------------------------------------
-PS2: Branch comparison (Branch and City are one-to-one in this dataset) 
+PS1: Rating and gross income by product line 
 ------------------------------------------------------------
-# A tibble: 3 × 7
-  Branch City      Transactions Revenue Mean_Total Median_Total Mean_Rating
-  <fct>  <fct>            <int>   <dbl>      <dbl>        <dbl>       <dbl>
-1 C      Naypyitaw          328 110569.       337.         271.        7.07
-2 A      Yangon             340 106200.       312.         241.        7.03
-3 B      Mandalay           332 106198.       320.         253.        6.82
-One-way ANOVA of invoice total by branch:
+           Product line Transactions Mean_Rating SD_Rating Mean_Gross_Income
+     Food and beverages          174    7.113218  1.715181          15.36531
+    Fashion accessories          178    7.029213  1.713437          14.52806
+      Health and beauty          152    7.003289  1.763817          15.41157
+ Electronic accessories          170    6.924706  1.702028          15.22060
+      Sports and travel          166    6.916265  1.714477          15.81263
+     Home and lifestyle          160    6.837500  1.718627          16.03033
+ Total_Gross_Income Total_Revenue
+           2673.564      56144.84
+           2585.995      54305.89
+           2342.559      49193.74
+           2587.501      54337.53
+           2624.896      55122.83
+           2564.853      53861.91
+                Df Sum Sq Mean Sq F value Pr(>F)
+`Product line`   5      8   1.598    0.54  0.746
+Residuals      994   2943   2.960               
+                Df Sum Sq Mean Sq F value Pr(>F)
+`Product line`   5    232   46.49   0.338   0.89
+Residuals      994 136727  137.55               
+
+------------------------------------------------------------
+PS2: Revenue and customer mix by branch 
+------------------------------------------------------------
+ Branch      City Transactions  Revenue Mean_Total Median_Total
+      C Naypyitaw          328 110568.7   337.0997     271.4198
+      A    Yangon          340 106200.4   312.3540     240.8280
+      B  Mandalay          332 106197.7   319.8725     252.8820
+ Branch Customer_Type Transactions
+      A        Member          167
+      B        Member          165
+      C        Member          169
+      A        Normal          173
+      B        Normal          167
+      C        Normal          159
              Df   Sum Sq Mean Sq F value Pr(>F)
 Branch        2   106988   53494   0.885  0.413
 Residuals   997 60292151   60474               
 
-------------------------------------------------------------
-PS3: Member vs Normal customer invoice totals 
-------------------------------------------------------------
-# A tibble: 2 × 7
-  `Customer type`     N Mean_Total Median_Total SD_Total Revenue Mean_Rating
-  <fct>           <int>      <dbl>        <dbl>    <dbl>   <dbl>       <dbl>
-1 Member            501       328.         266.     248. 164223.        6.94
-2 Normal            499       318.         237.     244. 158743.        7.01
+	Pearson's Chi-squared test
 
-	Welch Two Sample t-test
+data:  table(sales_clean$Branch, sales_clean$`Customer type`)
+X-squared = 0.41881, df = 2, p-value = 0.8111
 
-data:  Total by Customer type
-t = 0.62155, df = 997.84, p-value = 0.5344
-alternative hypothesis: true difference in means between group Member and group Normal is not equal to 0
-95 percent confidence interval:
- -20.85669  40.19359
-sample estimates:
-mean in group Member mean in group Normal 
-            327.7913             318.1229 
-
-Welch two-sample t-test of Member vs Normal invoice totals: t = 0.6215 , df = 997.84 , p = 0.5344 
-Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/ps3_customer_type_boxplot_member.png
-Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/ps3_customer_type_boxplot_normal.png
-Saved plot: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/outputs/plots/ps3_customer_type_boxplot_grid.png
-Boxplot titles computed from the data: n(Member) = 501, n(Normal) = 499
+Smallest expected cell count: 163.7 
 
 ------------------------------------------------------------
-PS4: Payment-method usage and invoice totals 
+PS3: Payment preference by gender and customer type 
 ------------------------------------------------------------
-# A tibble: 3 × 6
-  Payment         N Revenue Mean_Total Median_Total Mean_Rating
-  <fct>       <int>   <dbl>      <dbl>        <dbl>       <dbl>
-1 Ewallet       345 109993.       319.         254.        6.95
-2 Cash          344 112207.       326.         263.        6.97
-3 Credit card   311 100767.       324.         240.        7.00
-One-way ANOVA of invoice total by payment method:
-             Df   Sum Sq Mean Sq F value Pr(>F)
-Payment       2     9825    4913   0.081  0.922
-Residuals   997 60389313   60571               
+     Payment Gender Transactions Share_within_gender
+        Cash Female          178                35.5
+ Credit card Female          163                32.5
+     Ewallet Female          160                31.9
+        Cash   Male          166                33.3
+ Credit card   Male          148                29.7
+     Ewallet   Male          185                37.1
+     Payment Customer_Type Transactions Share_within_segment
+        Cash        Member          168                 33.5
+ Credit card        Member          172                 34.3
+     Ewallet        Member          161                 32.1
+        Cash        Normal          176                 35.3
+ Credit card        Normal          139                 27.9
+     Ewallet        Normal          184                 36.9
+
+	Pearson's Chi-squared test
+
+data:  table(sales_clean$Payment, sales_clean$Gender)
+X-squared = 2.9497, df = 2, p-value = 0.2288
+
+Smallest expected cell count: 155.2 
+
+	Pearson's Chi-squared test
+
+data:  table(sales_clean$Payment, sales_clean$`Customer type`)
+X-squared = 5.217, df = 2, p-value = 0.07364
+
+Smallest expected cell count: 155.2 
 
 ------------------------------------------------------------
-PS5: Association between quantity purchased and invoice total 
+PS4: Peak hours and weekdays 
+------------------------------------------------------------
+ Hour Transactions  Revenue Mean_Total
+   19          113 39699.51   351.3231
+   13          103 34723.23   337.1187
+   15          102 31179.51   305.6815
+   10          101 31421.48   311.1038
+   18           93 26030.34   279.8961
+   11           90 30377.33   337.5259
+   12           89 26065.88   292.8751
+   14           83 30828.40   371.4265
+   16           77 25226.32   327.6146
+   20           75 22969.53   306.2604
+   17           74 24445.22   330.3408
+       Part_of_day Transactions   Revenue Mean_Total
+ Afternoon (13-16)          365 121957.46   334.1300
+   Evening (17-20)          355 113144.60   318.7172
+   Morning (10-12)          280  87864.69   313.8025
+   Weekday Transactions  Revenue Mean_Total
+  Saturday          164 56120.81   342.2001
+   Tuesday          158 51482.25   325.8370
+ Wednesday          143 43731.14   305.8121
+    Friday          139 43926.34   316.0168
+  Thursday          138 45349.25   328.6177
+    Sunday          133 44457.89   334.2699
+    Monday          125 37899.08   303.1926
+
+	Chi-squared test for given probabilities
+
+data:  table(sales_clean$Hour)
+X-squared = 18.292, df = 10, p-value = 0.05023
+
+
+	Chi-squared test for given probabilities
+
+data:  table(sales_clean$Weekday)
+X-squared = 7.916, df = 6, p-value = 0.2443
+
+
+------------------------------------------------------------
+PS5: Unit price, quantity and gross income 
 ------------------------------------------------------------
 
 	Pearson's product-moment correlation
 
-data:  sales_clean$Quantity and sales_clean$Total
-t = 31.449, df = 998, p-value < 2.2e-16
+data:  sales_clean$`Unit price` and sales_clean$Quantity
+t = 0.3405, df = 998, p-value = 0.7336
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.6729497 0.7353418
+ -0.05124976  0.07272206
+sample estimates:
+       cor 
+0.01077756 
+
+Pearson r (Unit price, Quantity) = 0.0108 , n = 1000 , p = 0.7336 
+
+	Pearson's product-moment correlation
+
+data:  sales_clean$`Unit price` and sales_clean$`gross income`
+t = 25.897, df = 998, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.5953677 0.6696376
 sample estimates:
       cor 
-0.7055102 
+0.6339621 
 
-Pearson correlation Quantity vs Total: r = 0.7055 , n = 1000 , p = < 2.2e-16 
-Regression Total ~ Quantity + Unit price:
+           Product line Transactions Mean_Unit_Price Mean_Quantity
+     Food and beverages          174        56.00885      5.471264
+      Sports and travel          166        56.99325      5.542169
+ Electronic accessories          170        53.55159      5.711765
+    Fashion accessories          178        57.15365      5.067416
+     Home and lifestyle          160        55.31694      5.693750
+      Health and beauty          152        54.85447      5.618421
+ Total_Gross_Income Total_Revenue
+           2673.564      56144.84
+           2624.896      55122.83
+           2587.501      54337.53
+           2585.995      54305.89
+           2564.853      53861.91
+           2342.559      49193.74
 
 Call:
-lm(formula = Total ~ Quantity + `Unit price`, data = sales_clean)
+lm(formula = `gross income` ~ `Unit price`, data = sales_clean)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--211.831  -47.400    0.434   45.925  217.304 
+-22.7273  -5.6916  -0.1257   5.5917  22.0475 
 
 Coefficients:
-               Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  -324.52221    7.69334  -42.18   <2e-16 ***
-Quantity       58.77155    0.88305   66.56   <2e-16 ***
-`Unit price`    5.81364    0.09744   59.67   <2e-16 ***
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -0.21819    0.66697  -0.327    0.744    
+`Unit price`  0.28017    0.01082  25.897   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 81.59 on 997 degrees of freedom
-Multiple R-squared:  0.8901,	Adjusted R-squared:  0.8899 
-F-statistic:  4038 on 2 and 997 DF,  p-value: < 2.2e-16
+Residual standard error: 9.06 on 998 degrees of freedom
+Multiple R-squared:  0.4019,	Adjusted R-squared:  0.4013 
+F-statistic: 670.6 on 1 and 998 DF,  p-value: < 2.2e-16
 
-NOTE: Total = 1.05 * Quantity * Unit price in every row of this dataset, so this
-model reproduces the invoice formula rather than discovering a new driver.
-
-------------------------------------------------------------
-PS6: Customer ratings and their association with invoice total 
-------------------------------------------------------------
-    N Mean_Rating Median_Rating SD_Rating Min_Rating Max_Rating IQR_Rating
- 1000      6.9727             7   1.71858          4         10          3
-
-	Pearson's product-moment correlation
-
-data:  sales_clean$Rating and sales_clean$Total
-t = -1.152, df = 998, p-value = 0.2496
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- -0.09821291  0.02560923
-sample estimates:
-       cor 
--0.0364417 
-
-Pearson correlation Rating vs Total: r = -0.0364 , n = 1000 , p = 0.2496 
-
-------------------------------------------------------------
-PS7: Revenue by month and weekday (data cover 2019-01-01 to 2019-03-30) 
-------------------------------------------------------------
-# A tibble: 3 × 4
-  Month   Transactions Revenue Mean_Total
-  <chr>          <int>   <dbl>      <dbl>
-1 2019-01          352 116292.       330.
-2 2019-02          303  97219.       321.
-3 2019-03          345 109456.       317.
-# A tibble: 7 × 4
-  Weekday   Transactions Revenue Mean_Total
-  <chr>            <int>   <dbl>      <dbl>
-1 Saturday           164  56121.       342.
-2 Tuesday            158  51482.       326.
-3 Thursday           138  45349.       329.
-4 Sunday             133  44458.       334.
-5 Friday             139  43926.       316.
-6 Wednesday          143  43731.       306.
-7 Monday             125  37899.       303.
+NOTE: gross income = 0.05 * Quantity * Unit price in every row, so this line
+reproduces invoice arithmetic; it does not prove price drives profit.
 
 Consolidated inferential tests:
-      Problem_statement                                                    Test
-      PS1: product line                    One-way ANOVA (Total ~ Product line)
-            PS2: branch                          One-way ANOVA (Total ~ Branch)
-     PS3: customer type Welch two-sample t-test (unequal variances not assumed)
-    PS4: payment method                         One-way ANOVA (Total ~ Payment)
- PS5: quantity vs total                     Pearson correlation test (cor.test)
-   PS6: rating vs total                     Pearson correlation test (cor.test)
-  Statistic       DF       P_value Significant_at_5pct
-  0.3379648   5.0000  8.900398e-01               FALSE
-  0.8845828   2.0000  4.132102e-01               FALSE
-  0.6215476 997.8409  5.343814e-01               FALSE
-  0.0811041   2.0000  9.221038e-01               FALSE
-  0.7055102 998.0000 2.063948e-151                TRUE
- -0.0364417 998.0000  2.495969e-01               FALSE
+              Problem_statement
+      PS1: product line ratings
+ PS1: product line gross income
+            PS2: branch revenue
+       PS2: branch customer mix
+         PS3: payment by gender
+  PS3: payment by customer type
+             PS4: hourly volume
+            PS4: weekday volume
+         PS5: price vs quantity
+     PS5: price vs gross income
+                                                      Test   Statistic  DF
+                     One-way ANOVA (Rating ~ Product line)  0.53989474   5
+               One-way ANOVA (gross income ~ Product line)  0.33796475   5
+                            One-way ANOVA (Total ~ Branch)  0.88458283   2
+  Chi-square test of independence (Branch x Customer type)  0.41881027   2
+        Chi-square test of independence (Payment x Gender)  2.94968332   2
+ Chi-square test of independence (Payment x Customer type)  5.21700843   2
+     Chi-square goodness-of-fit (hourly counts vs uniform) 18.29200000  10
+    Chi-square goodness-of-fit (weekday counts vs uniform)  7.91600000   6
+                                  Pearson correlation test  0.01077756 998
+                                  Pearson correlation test  0.63396209 998
+       P_value Significant_at_5pct
+  7.461369e-01               FALSE
+  8.900398e-01               FALSE
+  4.132102e-01               FALSE
+  8.110666e-01               FALSE
+  2.288150e-01               FALSE
+  7.364462e-02               FALSE
+  5.023329e-02               FALSE
+  2.443222e-01               FALSE
+  7.335552e-01               FALSE
+ 1.609952e-113                TRUE
 
 [PROBLEM STATEMENTS] Completed. Tables in outputs/reports/ps*.csv,
-test outputs in outputs/reports/ps*_*.txt, plots in outputs/plots/.
+test outputs in outputs/reports/*.txt, plots in outputs/plots/.
 
 ------------------------------------------------------------
 Running: scripts/report_figures.R 
 ------------------------------------------------------------
 
 [REPORT FIGURES] Building report figures
-Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig1_revenue_by_product_line.png
-Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig2_revenue_by_branch.png
-Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig3_customer_type_boxplot.png
-Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig4_payment_methods.png
-Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig5_quantity_vs_total.png
-Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig6_rating_distribution.png
-Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig7_monthly_revenue.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig1_product_line_performance.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig2_branch_comparison.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig3_payment_demographics.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig4_peak_hours_days.png
+Saved figure: /home/Primo/Documents/programing/R/FA-2/R_Unit1_to_Unit4_Project/report/figures/fig5_price_vs_quantity.png
 
 [REPORT FIGURES] Completed.
 
@@ -772,56 +803,54 @@ Running: scripts/verify_results.R
 ------------------------------------------------------------
 
 [VERIFICATION] Recomputing report figures from the raw CSV
-             Quantity Value_from_analysis_scripts Value_recomputed_from_raw_csv
-                 Rows                        1000                          1000
-              Columns                          17                            17
-        Missing_cells                           0                             0
-       Duplicate_rows                           0                             0
-   Unique_invoice_ids                        1000                          1000
-        Total_revenue                  322966.749                    322966.749
-   Mean_invoice_total                  322.966749                    322.966749
- Median_invoice_total                     253.848                       253.848
-     SD_invoice_total            245.885335100972              245.885335100972
-    Mean_gross_income                   15.379369                     15.379369
-          Mean_rating                      6.9727                        6.9727
-        Mean_quantity                        5.51                          5.51
-      Mean_unit_price                    55.67213                      55.67213
-   Cor_quantity_total           0.705510185943306             0.705510185943306
-     Cor_rating_total         -0.0364417049970184           -0.0364417049970184
-  Cor_unitprice_total           0.633962088589069             0.633962088589069
-             Date_min                  2019-01-01                    2019-01-01
-             Date_max                  2019-03-30                    2019-03-30
-  Member_transactions                         501                           501
-  Normal_transactions                         499                           499
- Match
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
-  TRUE
+                Quantity Value_from_analysis_scripts
+                    Rows                1.000000e+03
+                 Columns                1.700000e+01
+ Derived_columns_present                1.000000e+00
+           Missing_cells                0.000000e+00
+          Duplicate_rows                0.000000e+00
+           Total_revenue                3.229667e+05
+             Mean_rating                6.972700e+00
+       Mean_gross_income                1.537937e+01
+  Food_beverages_revenue                5.614484e+04
+        Branch_C_revenue                1.105687e+05
+     Hour19_transactions                1.130000e+02
+        Saturday_revenue                5.612081e+04
+           Cor_price_qty                1.077756e-02
+         Cor_price_gross                6.339621e-01
+       Chisq_branch_cust                4.188103e-01
+    Chisq_payment_gender                2.949683e+00
+      Chisq_payment_cust                5.217008e+00
+          Anova_rating_F                5.398947e-01
+          Anova_branch_F                8.845828e-01
+ Value_recomputed_from_raw_csv Match
+                  1.000000e+03  TRUE
+                  1.700000e+01  TRUE
+                  1.000000e+00  TRUE
+                  0.000000e+00  TRUE
+                  0.000000e+00  TRUE
+                  3.229667e+05  TRUE
+                  6.972700e+00  TRUE
+                  1.537937e+01  TRUE
+                  5.614484e+04  TRUE
+                  1.105687e+05  TRUE
+                  1.130000e+02  TRUE
+                  5.612081e+04  TRUE
+                  1.077756e-02  TRUE
+                  6.339621e-01  TRUE
+                  4.188103e-01  TRUE
+                  2.949683e+00  TRUE
+                  5.217008e+00  TRUE
+                  5.398947e-01  TRUE
+                  8.845828e-01  TRUE
                                  Identity Holds
           Total == 1.05 * cogs (all rows)  TRUE
  cogs == Quantity * Unit price (all rows)  TRUE
         Tax 5% == gross income (all rows)  TRUE
-         Tax 5% == 0.05 * cogs (all rows)  TRUE
          gross margin percentage constant  TRUE
+                    Time values all HH:MM  TRUE
 
-All 20 reported quantities recomputed and matched.
+All 19 reported quantities recomputed and matched.
 
 [VERIFICATION] Completed.
 Warning message:
