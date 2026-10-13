@@ -230,6 +230,193 @@ save_project_plot(p_price_total, "unit2_unit_price_vs_total_scatter.png")
 # price contributes to total spending, but quantity and product mix also affect
 # the total. This association is not a causal conclusion.
 
+# ==============================================================
+# Sample-style extra operations (as in stock sample) - supermarket version
+# ==============================================================
+
+Data = supermarket_data
+View(Data)
+
+#select options
+
+S1 = select(Data, Branch, `Product line`, Total, Rating, Quantity)
+View(S1)
+
+S2 = select(Data, Branch, Total, cogs, `gross income`)
+View(S2)
+
+
+#Filters operations
+
+F1 = filter(Data, Quantity >= 7) # getting rows which has Quantity greather than or equal to 7
+View(F1)
+
+F2 = filter(Data, Rating > 7)
+View(F2)
+
+F3 = filter(Data, Quantity >= 7, Rating > 7)
+View(F3)
+
+
+#Mutate operation
+
+M1 = mutate(Data, Price_Range = `Unit price` * Quantity)
+View(M1)
+
+
+#Arrange operation
+
+A1 = arrange(Data, Total) #ascending order
+View(A1)
+
+A2 = arrange(Data, desc(Total)) #descending order
+View(A2)
+
+
+#summaries operation
+
+info_close = summarise(Data,avg=mean(Total),count=n())
+View(info_close)
+
+info = summarise(
+  Data,
+  Average_Unit_price = mean(`Unit price`, na.rm=TRUE),
+  Average_Quantity = mean(Quantity, na.rm=TRUE),
+  Average_Total = mean(Total, na.rm=TRUE),
+  Average_Rating = mean(Rating, na.rm=TRUE),
+  Average_GrossIncome = mean(`gross income`, na.rm=TRUE)
+)
+View(info)
+
+#group_by operation
+
+new = group_by(Data, `Product line`)
+View(new)
+
+
+#pipe operations
+
+Data$Total%>%mean(na.rm=TRUE)
+Data%>%summarise(mean(Total, na.rm=TRUE),n())
+Data%>%group_by(Branch)%>%summarise(count=n(),avg=mean(Total,na.rm=TRUE))
+
+
+#gather operation (using tidyr gather for sample look; pivot_longer if not available)
+
+if (exists("gather")) {
+  gat = gather(Data,"Sales_stage","value",7:10)
+} else {
+  gat = tidyr::pivot_longer(Data, cols=7:10, names_to="Sales_stage", values_to="value")
+}
+View(gat)
+
+
+#spread operation
+
+if (exists("spread")) {
+  spre = spread(gat,Sales_stage,value)
+} else {
+  spre = tidyr::pivot_wider(gat, names_from=Sales_stage, values_from=value)
+}
+View(spre)
+
+
+#unite
+
+club = unite(Data,"value",`Unit price`,Total,sep="<-->")
+View(club)
+
+
+#separate
+
+sep = separate(club,value,c("Unit price","Total"),sep="<-->")
+View(sep)
+
+
+
+#CENTRAL TENDENCIES
+
+Mean <- mean(Data$Total, na.rm = TRUE)
+Median <- median(Data$Total, na.rm = TRUE)
+# Mode via modeest if available, else manual
+if (requireNamespace("modeest", quietly = TRUE)) {
+  Mode <- modeest::mfv(Data$Total, na_rm = TRUE)
+} else {
+  Mode <- as.numeric(names(sort(table(Data$Total), decreasing=TRUE)[1]))
+}
+
+print(Mean)
+print(Median)
+print(Mode)
+
+#DISPERSION
+
+SD <- sd(Data$Total, na.rm = TRUE)
+Variance <- var(Data$Total, na.rm = TRUE)
+Quartile <- quantile(Data$Total, na.rm = TRUE)
+IQR_Value <- IQR(Data$Total, na.rm = TRUE)
+Price_Range <- range(Data$Total, na.rm = TRUE)
+
+print(SD)
+print(Variance)
+print(Quartile)
+print(IQR_Value)
+print(Price_Range)
+
+#selecting Numerical data
+
+Numeric_Data <- Data %>%
+  select(where(is.numeric))
+
+
+#COEFFICIENT OF VARIATION
+
+CV <- SD / Mean * 100
+print(CV)
+
+# CV for every numerical column
+CV_All <- sapply(Numeric_Data, function(x) {
+  mean_x <- mean(x, na.rm = TRUE)
+  sd_x <- sd(x, na.rm = TRUE)
+  
+  if (is.na(mean_x) || mean_x == 0 || is.na(sd_x)) {
+    return(NA_real_)
+  }
+  
+  sd_x / abs(mean_x) * 100
+})
+
+print(CV_All)
+
+
+#DESCRIPTIVE STATISTICS
+
+if (requireNamespace("pastecs", quietly = TRUE)) {
+  print(pastecs::stat.desc(Numeric_Data))
+}
+
+# CORRELATION
+
+# Correlation matrix using numerical columns
+Correlation_Data <- cor(
+  Numeric_Data,
+  use = "pairwise.complete.obs"
+)
+
+print(Correlation_Data)
+
+
+# 13. CORRELATION PLOTS
+
+# Correlation colour plot
+if (requireNamespace("corrplot", quietly = TRUE)) corrplot::corrplot(Correlation_Data)
+
+# Correlation with numerical values
+if (requireNamespace("corrplot", quietly = TRUE)) corrplot::corrplot(Correlation_Data, method = "number")
+
+# Correlation with pie charts
+if (requireNamespace("corrplot", quietly = TRUE)) corrplot::corrplot(Correlation_Data, method = "pie")
+
 # Export the cleaned working dataset.
 write.csv(sales_clean,
           file.path(project_root, "outputs/reports/supermarket_sales_cleaned.csv"),

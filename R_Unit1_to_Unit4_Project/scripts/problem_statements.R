@@ -52,8 +52,14 @@ data_quality <- data.frame(
 print(data_quality, row.names = FALSE)
 write.csv(data_quality, file.path(report_dir, "ps0_data_quality.csv"), row.names = FALSE)
 
-# --- PS1. Product Line Performance & Satisfaction ---
-# How do average Rating and gross income vary across Product line categories?
+# ==============================================================
+# visualization - problem statements (supermarket version, sample style)
+# ==============================================================
+
+#problem statement 1
+#How do average customer Rating scores and gross income vary across different Product line categories?
+
+#statistical analysis
 section("PS1: Rating and gross income by product line")
 ps1 <- sales_clean %>%
   dplyr::group_by(`Product line`) %>%
@@ -66,6 +72,7 @@ ps1 <- sales_clean %>%
     Total_Revenue = sum(Total, na.rm = TRUE),
     .groups = "drop") %>%
   dplyr::arrange(dplyr::desc(Mean_Rating))
+View(ps1)
 print(as.data.frame(ps1), row.names = FALSE)
 write.csv(ps1, file.path(report_dir, "ps1_product_line_performance.csv"), row.names = FALSE)
 
@@ -91,8 +98,10 @@ add_test("ps1_gross", "PS1: product line gross income",
   "At least one product-line mean gross income differs",
   "F", g1$statistic, g1$df, g1$p_value)
 
-# --- PS2. Geographical & Branch Sales Comparison ---
-# Revenue (Total) and Customer type distribution across Branch/City.
+#problem statement 2
+#Is there a statistically significant difference in revenue (Total) and Customer type distribution among the three branches?
+
+#statistical analysis
 section("PS2: Revenue and customer mix by branch")
 ps2_rev <- sales_clean %>%
   dplyr::group_by(Branch, City) %>%
@@ -103,12 +112,14 @@ ps2_rev <- sales_clean %>%
     Median_Total = median(Total, na.rm = TRUE),
     .groups = "drop") %>%
   dplyr::arrange(dplyr::desc(Revenue))
+View(ps2_rev)
 print(as.data.frame(ps2_rev), row.names = FALSE)
 write.csv(ps2_rev, file.path(report_dir, "ps2_branch_revenue.csv"), row.names = FALSE)
 
 ps2_counts <- as.data.frame(table(Branch = sales_clean$Branch,
                                   Customer_Type = sales_clean$`Customer type`))
 names(ps2_counts)[3] <- "Transactions"
+View(ps2_counts)
 print(ps2_counts, row.names = FALSE)
 write.csv(ps2_counts, file.path(report_dir, "ps2_branch_customer_counts.csv"), row.names = FALSE)
 
@@ -134,13 +145,16 @@ add_test("ps2_chi", "PS2: branch customer mix",
   "Customer type distribution differs by branch",
   "X-squared", unname(ps2_chi$statistic), unname(ps2_chi$parameter), ps2_chi$p.value)
 
-# --- PS3. Payment Method Demographics ---
-# Preferred Payment methods across Gender and Customer type segments.
+#problem statement 3
+#Which Payment methods are preferred across different Gender and Customer type segments?
+
+#statistical analysis
 section("PS3: Payment preference by gender and customer type")
 ps3_gender <- as.data.frame(table(Payment = sales_clean$Payment, Gender = sales_clean$Gender))
 names(ps3_gender)[3] <- "Transactions"
 ps3_gender$Share_within_gender <- ave(ps3_gender$Transactions, ps3_gender$Gender,
   FUN = function(x) round(x / sum(x) * 100, 1))
+View(ps3_gender)
 print(ps3_gender, row.names = FALSE)
 write.csv(ps3_gender, file.path(report_dir, "ps3_payment_by_gender.csv"), row.names = FALSE)
 
@@ -149,6 +163,7 @@ ps3_cust <- as.data.frame(table(Payment = sales_clean$Payment,
 names(ps3_cust)[3] <- "Transactions"
 ps3_cust$Share_within_segment <- ave(ps3_cust$Transactions, ps3_cust$Customer_Type,
   FUN = function(x) round(x / sum(x) * 100, 1))
+View(ps3_cust)
 print(ps3_cust, row.names = FALSE)
 write.csv(ps3_cust, file.path(report_dir, "ps3_payment_by_customertype.csv"), row.names = FALSE)
 
@@ -174,8 +189,10 @@ add_test("ps3_cust", "PS3: payment by customer type",
   "Payment preference differs by customer type",
   "X-squared", unname(ps3_chi_c$statistic), unname(ps3_chi_c$parameter), ps3_chi_c$p.value)
 
-# --- PS4. Peak Shopping Hours & Days ---
-# Highest customer volume and order totals by hour (Time) and weekday (Date).
+#problem statement 4
+#What time of day (Time) and day of the week (Date) experience the highest customer volume and order totals?
+
+#statistical analysis
 section("PS4: Peak hours and weekdays")
 if (any(!grepl("^[0-9]{2}:[0-9]{2}$", sales_clean$Time))) {
   stop("Unexpected Time format: values are not all HH:MM.")
@@ -191,6 +208,7 @@ ps4_hour <- sales_clean %>%
   dplyr::summarise(Transactions = dplyr::n(), Revenue = sum(Total, na.rm = TRUE),
                    Mean_Total = mean(Total, na.rm = TRUE), .groups = "drop") %>%
   dplyr::arrange(dplyr::desc(Transactions))
+View(ps4_hour)
 print(as.data.frame(ps4_hour), row.names = FALSE)
 write.csv(ps4_hour, file.path(report_dir, "ps4_hourly.csv"), row.names = FALSE)
 
@@ -199,6 +217,7 @@ ps4_part <- sales_clean %>%
   dplyr::summarise(Transactions = dplyr::n(), Revenue = sum(Total, na.rm = TRUE),
                    Mean_Total = mean(Total, na.rm = TRUE), .groups = "drop") %>%
   dplyr::arrange(dplyr::desc(Transactions))
+View(ps4_part)
 print(as.data.frame(ps4_part), row.names = FALSE)
 write.csv(ps4_part, file.path(report_dir, "ps4_part_of_day.csv"), row.names = FALSE)
 
@@ -207,6 +226,7 @@ ps4_day <- sales_clean %>%
   dplyr::summarise(Transactions = dplyr::n(), Revenue = sum(Total, na.rm = TRUE),
                    Mean_Total = mean(Total, na.rm = TRUE), .groups = "drop") %>%
   dplyr::arrange(dplyr::desc(Transactions))
+View(ps4_day)
 print(as.data.frame(ps4_day), row.names = FALSE)
 write.csv(ps4_day, file.path(report_dir, "ps4_weekday.csv"), row.names = FALSE)
 
@@ -230,8 +250,10 @@ add_test("ps4_day", "PS4: weekday volume",
   "At least one weekday differs in volume",
   "X-squared", unname(ps4_chi_d$statistic), unname(ps4_chi_d$parameter), ps4_chi_d$p.value)
 
-# --- PS5. Profitability & Pricing Elasticity ---
-# How does Unit price relate to Quantity purchased and gross income generated?
+#problem statement 5
+#How does product Unit price impact purchase Quantity and total gross income generated?
+
+#statistical analysis
 section("PS5: Unit price, quantity and gross income")
 ps5_qty <- stats::cor.test(sales_clean$`Unit price`, sales_clean$Quantity, method = "pearson")
 print(ps5_qty)
@@ -266,6 +288,7 @@ ps5_profit <- sales_clean %>%
     Total_Revenue = sum(Total, na.rm = TRUE),
     .groups = "drop") %>%
   dplyr::arrange(dplyr::desc(Total_Gross_Income))
+View(ps5_profit)
 print(as.data.frame(ps5_profit), row.names = FALSE)
 write.csv(ps5_profit, file.path(report_dir, "ps5_profitability_by_product.csv"), row.names = FALSE)
 

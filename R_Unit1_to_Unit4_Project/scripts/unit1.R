@@ -1,5 +1,28 @@
-# UNIT 1: R basics, data types, vectors, data frames, CSV import/export
-# Sources: "final Unit I command script.pdf" and introductory examples.
+# ==============================================================
+# Subject: Statistical Data Analysis using R
+# Topic: Descriptive Analysis of Supermarket Sales Data
+# Dataset: Supermarket Sales Dataset
+# ==============================================================
+
+
+# installation of packages
+
+try(install.packages("tidyr"), silent = TRUE)
+try(install.packages("dplyr"), silent = TRUE)
+try(install.packages("ggplot2"), silent = TRUE)
+try(install.packages("pastecs"), silent = TRUE)
+try(install.packages("moments"), silent = TRUE)
+try(install.packages("corrplot"), silent = TRUE)
+try(install.packages("modeest"), silent = TRUE)
+
+
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+if (requireNamespace("pastecs", quietly = TRUE)) library(pastecs)
+if (requireNamespace("moments", quietly = TRUE)) library(moments)
+if (requireNamespace("corrplot", quietly = TRUE)) library(corrplot)
+if (requireNamespace("modeest", quietly = TRUE)) library(modeest)
 
 cat("\n[UNIT 1] R basics and data inspection\n")
 
@@ -61,6 +84,69 @@ student_imported <- read.csv(
   file.path(project_root, "outputs/reports/student_data_example.csv")
 )
 print(student_imported)
+
+# ==============================================================
+# Supermarket dataset - sample-style inspection (as in stock sample)
+# ==============================================================
+
+# write supermarket data for sample-style import (mirrors write.csv(all_companies_combined,"all_companies.csv"))
+write.csv(supermarket_data, file.path(project_root, "outputs/reports/supermarket_sales_exported.csv"), row.names = FALSE)
+
+#import dataset
+Data = read.csv(file.path(project_root, "data/supermarket_sales.csv"), stringsAsFactors = FALSE, check.names = FALSE)
+
+View(Data)
+
+#Basic dataset information
+
+dim(Data)
+colnames(Data)
+head(Data)
+head(Data,10)
+tail(Data,2)
+nrow(Data)
+ncol(Data)
+str(Data)
+summary(Data)
+
+mean(Data$Total)
+median(Data$Total,na.rm = TRUE)
+sd(Data$Total, na.rm=TRUE)
+var(Data$Total, na.rm=TRUE)
+
+mean(Data$Rating) # not gives the result because na value present if any
+mean(Data$Rating,na.rm=TRUE)
+
+
+typeof(Data) #list
+typeof(Data$Branch) #character
+typeof(Data$Total) #double
+typeof(Data$Rating) #double
+
+#check missing values
+
+anyNA(Data)
+is.na(Data)
+sum(is.na(Data))
+colSums(is.na(Data))
+rowSums(is.na(Data))
+
+#missing value table
+
+Missing = data.frame(
+  Column = colnames(Data),
+  Missing_Count = colSums(is.na(Data))
+)
+
+View(Missing)
+
+
+#Remove rows having missing values
+
+CleanData = na.omit(Data) #create clean dataset containing zero na values
+View(CleanData)
+dim(CleanData)
+
 
 # 5. Inspect the provided supermarket dataset.
 cat("\nProvided dataset: supermarket_sales.csv\n")
