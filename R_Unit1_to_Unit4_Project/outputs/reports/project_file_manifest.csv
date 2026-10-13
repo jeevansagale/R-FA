@@ -1,7 +1,7 @@
 path,bytes,md5_12
 outputs/reports/.gitkeep,0,d41d8cd98f00
 outputs/reports/accounting_relations_check.csv,216,8e7021a358e2
-outputs/reports/project_file_manifest.csv,6973,6f12222164e2
+outputs/reports/project_file_manifest.csv,6646,13eb7717c20d
 outputs/reports/ps0_data_quality.csv,87,f24a476079a9
 outputs/reports/ps1_gross_income_anova.txt,147,478aafb37191
 outputs/reports/ps1_product_line_performance.csv,674,b3b1700e8c79
@@ -24,7 +24,7 @@ outputs/reports/ps5_price_grossincome_correlation.txt,296,093673b41172
 outputs/reports/ps5_price_quantity_correlation.txt,295,62d866a5605e
 outputs/reports/ps5_profitability_by_product.csv,561,0e875d8a9411
 outputs/reports/ps_inferential_tests.csv,4107,97b1c72245cc
-outputs/reports/run_log.txt,50798,d1989823bbcb
+outputs/reports/run_log.txt,246174,bee6921a4377
 outputs/reports/student_data_example.csv,69,e8e20de751da
 outputs/reports/supermarket_sales_cleaned.csv,147886,df1a07fcecae
 outputs/reports/supermarket_sales_exported.csv,148563,aac17e625aba
@@ -70,14 +70,6 @@ report/Supermarket_Sales_FA2_Report.docx,772154,017a13c8fb46
 report/Supermarket_Sales_FA2_Report.pdf,1045905,c7cdaf4f265a
 report/build_pdf.py,8539,a2e4b0273c0c
 report/build_report.py,38822,0be8afc068a3
-scripts/course_concept_demos.R,2721,3bce031f06f1
-scripts/problem_statements.R,15179,322a6817cde7
-scripts/report_figures.R,5769,ebbe7cdb305a
-scripts/unit1.R,5899,2e04bdcf53c5
-scripts/unit2.R,14496,daf33a56bfbc
-scripts/unit3.R,3939,2c9ea3022b84
-scripts/unit4.R,7474,24ede39c26ec
-scripts/verify_results.R,4699,52b7d15ca33c
 functions/helper_functions.R,822,f28dd6b6a730
 data/supermarket_sales.csv,131528,3b4cf0aacbb9
 reference_materials/sample project_FA2.R,2173,ad9e9863b7ee
@@ -104,9 +96,9 @@ reference_materials/extracted_text/Script_Scatter plot.txt,2802,2fe6f34af833
 reference_materials/extracted_text/dplyr.txt,1270,c47dc1068bf6
 reference_materials/extracted_text/final Unit I command script.txt,7399,0defeba76533
 oral_exam/viva_questions_and_functions.md,5637,703a1e99a90e
-main.R,5325,41f264fa7ddd
+main.R,65052,9be017f2094b
 requirements.R,3077,0ffa2bc0e3c2
-README.md,4763,ad7536f2cf85
+README.md,4876,4b0d7816ebef
 PLAN.md,15001,8a69d51aae69
 PROGRESS.md,4160,1445e6df76fa
 UNIT_MAPPING.md,2754,ffaca79cfbfa

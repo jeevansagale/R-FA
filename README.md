@@ -93,9 +93,7 @@ Zero missing values, zero duplicates, source file preserved untouched.
 
 ```
 R_Unit1_to_Unit4_Project/
-├── main.R                      ← run this (entry point)
-├── scripts/                    ← unit1–unit4, problem_statements (PS1–PS5),
-│                                  report_figures, verify_results
+├── main.R                      ← ONE SINGLE FILE — all Unit I–IV + PS1–PS5 + figures + verification merged here
 ├── outputs/reports/            ← regenerated CSV/TXT tables + test results
 ├── outputs/plots/              ← exploratory plots
 ├── report/figures/             ← the 5 figures above + cover logo
@@ -118,7 +116,7 @@ Rscript main.R
 ```
 
 Packages `dplyr`/`ggplot2` install automatically; `tidyr` is optional.
-`scripts/verify_results.R` independently recomputes every headline number from the
+`main.R` itself verifies the run — it recomputes every headline number from the
 raw CSV and halts on any mismatch — **19/19 matched** in the submitted run
 (log: `outputs/reports/run_log.txt`).
 
