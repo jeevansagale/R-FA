@@ -1,7 +1,7 @@
 
 Call:
 lm(formula = Total ~ `Unit price` + Quantity + Branch + Payment, 
-    data = model_data)
+    data = Mult_Reg_Data)
 
 Residuals:
      Min       1Q   Median       3Q      Max 

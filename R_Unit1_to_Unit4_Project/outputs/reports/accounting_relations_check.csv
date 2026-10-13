@@ -1,4 +1,4 @@
 "Identity","Holds"
-"Total == 1.05*cogs",TRUE
-"cogs == Qty*Price",TRUE
-"Tax==gross",TRUE
+"Total == 1.05 * cogs",TRUE
+"cogs == Qty * Price",TRUE
+"Tax == gross",TRUE

@@ -1,6 +1,6 @@
 
 Call:
-lm(formula = `gross income` ~ cogs, data = regression_data)
+lm(formula = `gross income` ~ cogs, data = Regression_Data)
 
 Residuals:
        Min         1Q     Median         3Q        Max 
