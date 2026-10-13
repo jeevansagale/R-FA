@@ -1,6 +1,4 @@
 "Identity","Holds"
-"Total == 1.05 * cogs (all rows)",TRUE
-"cogs == Quantity * Unit price (all rows)",TRUE
-"Tax 5% == gross income (all rows)",TRUE
-"gross margin percentage constant",TRUE
-"Time values all HH:MM",TRUE
+"Total == 1.05*cogs",TRUE
+"cogs == Qty*Price",TRUE
+"Tax==gross",TRUE

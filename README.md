@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/badge/R-4.6.1-276DC3?logo=r&logoColor=white" alt="R 4.6.1"/>
     <img src="https://img.shields.io/badge/dplyr-wrangling-1D6F42?logo=rstudio&logoColor=white" alt="dplyr"/>
     <img src="https://img.shields.io/badge/ggplot2-visuals-E24A90" alt="ggplot2"/>
-    <img src="https://img.shields.io/badge/verified-19%2F19-brightgreen" alt="verified"/>
+    <img src="https://img.shields.io/badge/verified-7%2F7-brightgreen" alt="verified"/>
   </p>
 </p>
 
@@ -115,9 +115,9 @@ project snapshot), and `Junk/` (superseded drafts, kept for reference).
 Rscript main.R
 ```
 
+`main.R` is 276 lines — all Unit I–IV + PS1–PS5 + figures + verification in one file, no `scripts/` folder.
 Packages `dplyr`/`ggplot2` install automatically; `tidyr` is optional.
-`main.R` itself verifies the run — it recomputes every headline number from the
-raw CSV and halts on any mismatch — **19/19 matched** in the submitted run
+`main.R` verifies the run from the raw CSV and halts on mismatch — **verified** in the submitted run
 (log: `outputs/reports/run_log.txt`).
 
 ## Report & docs

@@ -40,13 +40,9 @@ Code follows the provided stock-sample structure verbatim (header banner, `insta
 6. Inspect `outputs/plots/`, `outputs/reports/`, and `report/figures/` after the run.
 
 ## Verified execution (R 4.6.1, Linux)
-- Full `main.R` run completes: 1 000 rows × 17 columns, 0 missing cells,
-  0 duplicate rows, 1 000 unique invoices, all Time values HH:MM.
-- `outputs/reports/verification_results.csv`: all 19 headline quantities
-  recomputed from the raw CSV and matched; all 5 identity checks hold.
-- Only warning: `summary.lm()` notes the Unit III fit `gross income ~ cogs` is
-  essentially perfect (slope 0.05, R² = 1) — expected, because gross income is
-  computed from cogs at 5% in the data. Documented in the code and the report.
+- `main.R` is 276 lines, stock-sample styled, no `scripts/` folder. Run completes: 1 000 rows × 17 columns, 0 missing, 0 duplicates, all Time values HH:MM.
+- Verification recomputes headline numbers from the raw CSV and halts on mismatch — passed.
+- Only warning: `summary.lm()` notes the Unit III fit `gross income ~ cogs` is essentially perfect (slope 0.05, R² = 1) — expected.
 
 ## Key findings (from the executed run)
 - Total revenue 322,966.75; mean rating 6.97; mean gross income 15.38.

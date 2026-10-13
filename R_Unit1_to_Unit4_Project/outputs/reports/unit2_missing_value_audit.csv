@@ -1,18 +1,18 @@
-"Variable","Missing_Count","Missing_Percent"
-"Invoice ID",0,0
-"Branch",0,0
-"City",0,0
-"Customer type",0,0
-"Gender",0,0
-"Product line",0,0
-"Unit price",0,0
-"Quantity",0,0
-"Tax 5%",0,0
-"Total",0,0
-"Date",0,0
-"Time",0,0
-"Payment",0,0
-"cogs",0,0
-"gross margin percentage",0,0
-"gross income",0,0
-"Rating",0,0
+"Variable","Missing_Count"
+"Invoice ID",0
+"Branch",0
+"City",0
+"Customer type",0
+"Gender",0
+"Product line",0
+"Unit price",0
+"Quantity",0
+"Tax 5%",0
+"Total",0
+"Date",0
+"Time",0
+"Payment",0
+"cogs",0
+"gross margin percentage",0
+"gross income",0
+"Rating",0

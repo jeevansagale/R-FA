@@ -1,3 +1,3 @@
-"Model","R_Squared","Note"
-"Additive: Total ~ Unit price + Quantity + Branch + Payment",0.890643471181794,"Additive form cannot represent Total = 1.05 * Quantity * Unit price"
-"With interaction: Total ~ Unit price * Quantity",1,"Interaction term reproduces the invoice formula, R-squared = 1"
+"Model","R_Squared"
+"Additive",0.890643471181794
+"With interaction",1
