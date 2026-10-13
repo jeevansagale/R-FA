@@ -1,5 +1,7 @@
 # Supermarket Sales R Project (Units I–IV)
 
+Code follows the provided stock-sample structure verbatim (header banner, `install.packages`/`library` block, `Data = read.csv` → `View(Data)` → `dim/head/str/summary` → `Missing`/`CleanData` → `S1/S2`/`F1/M1`/`A1` → `CENTRAL TENDENCIES`/`DISPERSION`/`CV`/`stat.desc`/`corrplot` → `#problem statement` blocks), adapted to supermarket columns while keeping every supermarket result.
+
 ## Contents
 - `R_Unit1_to_Unit4_Project.Rproj`: open this in RStudio.
 - `main.R`: main entry point. Resolves the project root from the script location

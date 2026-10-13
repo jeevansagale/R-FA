@@ -12,7 +12,8 @@
 <p align="center">
   A complete, reproducible R project on <b>1,000 supermarket transactions</b> —
   five analytical problem statements, executed code, verified numbers,
-  publication-style charts, and a submission-ready report.
+  publication-style charts, and a submission-ready report.<br/>
+  <i>Code is written in the exact style of the provided stock-market sample — banner, <code>View()</code>, <code>S1/S2/F1/M1</code> blocks, <code>CENTRAL TENDENCIES / DISPERSION / CV / stat.desc / corrplot</code> sections and <code>#problem statement → #conclusion:</code> blocks — with all logic kept for the supermarket data.</i>
 </p>
 
 ---
