@@ -63,8 +63,7 @@ Data <- read.csv(csv_path, stringsAsFactors = FALSE, check.names = FALSE)
 supermarket_data <- Data
 write.csv(Data, file.path(report_dir, "supermarket_sales_exported.csv"), row.names = FALSE)
 
-View(Data)
-
+if (interactive()) View(Data)
 #Basic dataset information
 
 dim(Data)
@@ -113,13 +112,13 @@ Missing <- data.frame(
   Missing_Count = colSums(is.na(Data))
 )
 
-View(Missing)
+if (interactive()) View(Missing)
 write.csv(Missing, file.path(report_dir, "unit2_missing_value_audit.csv"), row.names = FALSE)
 
 #Remove rows having missing values
 
 CleanData <- na.omit(Data)
-View(CleanData)
+if (interactive()) View(CleanData)
 dim(CleanData)
 
 sales_clean <- Data
@@ -138,40 +137,31 @@ write.csv(sales_clean, file.path(report_dir, "supermarket_sales_cleaned.csv"), r
 #select options
 
 S1 <- select(Data, Branch, `Product line`, Total, Rating, Quantity)
-View(S1)
-
+if (interactive()) View(S1)
 S2 <- select(Data, Branch, Total, cogs, `gross income`)
-View(S2)
-
+if (interactive()) View(S2)
 #Filters operations
 
 F1 <- filter(Data, Quantity >= 7)
-View(F1)
-
+if (interactive()) View(F1)
 F2 <- filter(Data, Rating > 7)
-View(F2)
-
+if (interactive()) View(F2)
 F3 <- filter(Data, Quantity >= 7, Rating > 7)
-View(F3)
-
+if (interactive()) View(F3)
 #Mutate operation
 
 M1 <- mutate(Data, Price_Range = `Unit price` * Quantity)
-View(M1)
-
+if (interactive()) View(M1)
 #Arrange operation
 
 A1 <- arrange(Data, Total)
-View(A1)
-
+if (interactive()) View(A1)
 A2 <- arrange(Data, desc(Total))
-View(A2)
-
+if (interactive()) View(A2)
 #summaries operation
 
 info_close <- summarise(Data, avg = mean(Total), count = n())
-View(info_close)
-
+if (interactive()) View(info_close)
 info <- summarise(
   Data,
   Average_Unit_price = mean(`Unit price`, na.rm = TRUE),
@@ -180,13 +170,11 @@ info <- summarise(
   Average_Rating = mean(Rating, na.rm = TRUE),
   Average_Gross_Income = mean(`gross income`, na.rm = TRUE)
 )
-View(info)
-
+if (interactive()) View(info)
 #group_by operation
 
 new <- group_by(Data, `Product line`)
-View(new)
-
+if (interactive()) View(new)
 #pipe operations
 
 Data$Total %>% mean(na.rm = TRUE)
@@ -196,23 +184,19 @@ Data %>% group_by(Branch) %>% summarise(count = n(), avg = mean(Total, na.rm = T
 #gather operation
 
 gat <- gather(Data, "Sales_Stage", "value", 7:10)
-View(gat)
-
+if (interactive()) View(gat)
 #spread operation
 
 spre <- spread(gat, Sales_Stage, value)
-View(spre)
-
+if (interactive()) View(spre)
 #unite
 
 club <- unite(Data, "value", `Unit price`, Total, sep = "<-->")
-View(club)
-
+if (interactive()) View(club)
 #separate
 
 sep <- separate(club, value, c("Unit price", "Total"), sep = "<-->")
-View(sep)
-
+if (interactive()) View(sep)
 product_summary <- sales_clean %>%
   group_by(`Product line`) %>%
   summarise(
@@ -350,7 +334,7 @@ ps1 <- sales_clean %>%
   ) %>%
   arrange(desc(Mean_Rating))
 
-View(ps1)
+if (interactive()) View(ps1)
 write.csv(ps1, file.path(report_dir, "ps1_product_line_performance.csv"), row.names = FALSE)
 
 ps1_rating_aov <- summary(aov(Rating ~ `Product line`, data = sales_clean))
@@ -396,12 +380,12 @@ ps2_rev <- sales_clean %>%
   ) %>%
   arrange(desc(Revenue))
 
-View(ps2_rev)
+if (interactive()) View(ps2_rev)
 write.csv(ps2_rev, file.path(report_dir, "ps2_branch_revenue.csv"), row.names = FALSE)
 
 ps2_counts <- as.data.frame(table(Branch = sales_clean$Branch, Customer_Type = sales_clean$`Customer type`))
 names(ps2_counts)[3] <- "Transactions"
-View(ps2_counts)
+if (interactive()) View(ps2_counts)
 write.csv(ps2_counts, file.path(report_dir, "ps2_branch_customer_counts.csv"), row.names = FALSE)
 
 ps2_aov <- summary(aov(Total ~ Branch, data = sales_clean))
@@ -435,13 +419,13 @@ ggplot(ps2_rev, aes(x = Branch, y = Revenue, fill = City)) +
 ps3_gender <- as.data.frame(table(Payment = sales_clean$Payment, Gender = sales_clean$Gender))
 names(ps3_gender)[3] <- "Transactions"
 ps3_gender$Share_within_gender <- ave(ps3_gender$Transactions, ps3_gender$Gender, FUN = function(x) round(x / sum(x) * 100, 1))
-View(ps3_gender)
+if (interactive()) View(ps3_gender)
 write.csv(ps3_gender, file.path(report_dir, "ps3_payment_by_gender.csv"), row.names = FALSE)
 
 ps3_cust <- as.data.frame(table(Payment = sales_clean$Payment, Customer_Type = sales_clean$`Customer type`))
 names(ps3_cust)[3] <- "Transactions"
 ps3_cust$Share_within_segment <- ave(ps3_cust$Transactions, ps3_cust$Customer_Type, FUN = function(x) round(x / sum(x) * 100, 1))
-View(ps3_cust)
+if (interactive()) View(ps3_cust)
 write.csv(ps3_cust, file.path(report_dir, "ps3_payment_by_customertype.csv"), row.names = FALSE)
 
 ps3_chi_g <- chisq.test(table(sales_clean$Payment, sales_clean$Gender))
@@ -486,21 +470,21 @@ ps4_hour <- sales_clean %>%
   group_by(Hour) %>%
   summarise(Transactions = n(), Revenue = sum(Total), Mean_Total = mean(Total), .groups = "drop") %>%
   arrange(desc(Transactions))
-View(ps4_hour)
+if (interactive()) View(ps4_hour)
 write.csv(ps4_hour, file.path(report_dir, "ps4_hourly.csv"), row.names = FALSE)
 
 ps4_part <- sales_clean %>%
   group_by(Part_of_day) %>%
   summarise(Transactions = n(), Revenue = sum(Total), Mean_Total = mean(Total), .groups = "drop") %>%
   arrange(desc(Transactions))
-View(ps4_part)
+if (interactive()) View(ps4_part)
 write.csv(ps4_part, file.path(report_dir, "ps4_part_of_day.csv"), row.names = FALSE)
 
 ps4_day <- sales_clean %>%
   group_by(Weekday) %>%
   summarise(Transactions = n(), Revenue = sum(Total), Mean_Total = mean(Total), .groups = "drop") %>%
   arrange(desc(Transactions))
-View(ps4_day)
+if (interactive()) View(ps4_day)
 write.csv(ps4_day, file.path(report_dir, "ps4_weekday.csv"), row.names = FALSE)
 
 ps4_chi_h <- chisq.test(table(sales_clean$Hour))
@@ -547,7 +531,7 @@ ps5_profit <- sales_clean %>%
     .groups = "drop"
   ) %>%
   arrange(desc(Total_Gross_Income))
-View(ps5_profit)
+if (interactive()) View(ps5_profit)
 write.csv(ps5_profit, file.path(report_dir, "ps5_profitability_by_product.csv"), row.names = FALSE)
 
 #calculate correlation
