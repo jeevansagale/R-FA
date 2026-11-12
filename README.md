@@ -115,7 +115,7 @@ project snapshot), and `Junk/` (superseded drafts, kept for reference).
 Rscript main.R
 ```
 
-`main.R` is 276 lines — all Unit I–IV + PS1–PS5 + figures + verification in one file, no `scripts/` folder.
+`main.R` is the primary single-file analysis script — all Unit I–IV + PS1–PS5 + figures + verification in one file, no `scripts/` folder.
 Packages `dplyr`/`ggplot2` install automatically; `tidyr` is optional.
 `main.R` verifies the run from the raw CSV and halts on mismatch — **verified** in the submitted run
 (log: `outputs/reports/run_log.txt`).
